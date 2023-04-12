@@ -2,6 +2,12 @@ import illustration from "../../assets/images/login-illustration.png";
 import truimfLogo from "../../assets/images/triumf.png";
 
 export const LoginForm = () => {
+  const loginUser = (e) => {
+    e.preventDefault()
+    setTimeout(() => {
+      location.replace("https://triumf-admin.netlify.app")
+    }, 2000)
+  }
   return (
     <div className="w-full bg-hero">
       <div className="container px-8 mx-auto flex items-center gap-20">
@@ -11,8 +17,9 @@ export const LoginForm = () => {
         <div className="py-10 px-5 bg-white shadow-2xl rounded-xl">
           <img src={truimfLogo} alt="Truimf logo"  className="mx-auto mb-10" />
           <h1 className="font-bold text-2xl text-center mb-5">Kirish</h1>
-          <form className="flex flex-col gap-5 w-96">
+          <form className="flex flex-col gap-5 w-96" onSubmit={loginUser}>
             <input
+              required
               type="text"
               name="tel"
               id="tel"
@@ -20,6 +27,7 @@ export const LoginForm = () => {
               className="outline-slate-300 py-3 px-4 rounded-md border border-slate-300"
             />
             <input
+              required
               type="password"
               name="password"
               id="password"
