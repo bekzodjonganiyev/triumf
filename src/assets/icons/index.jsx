@@ -24,7 +24,7 @@ export const ShowCaseSvg_1 = () => (
   >
     <mask
       id="mask0_125_5144"
-      style="mask-type:alpha"
+      style={{maskType: "alpha"}}
       maskUnits="userSpaceOnUse"
       x="0"
       y="0"
@@ -690,7 +690,7 @@ export const FacebookSvg = () => (
     />
     <mask
       id="mask0_125_6008"
-      style="mask-type:luminance"
+      style={{maskType: "luminance"}}
       maskUnits="userSpaceOnUse"
       x="7"
       y="3"
@@ -724,7 +724,7 @@ export const TwitterSvg = () => (
     />
     <mask
       id="mask0_125_6009"
-      style="mask-type:luminance"
+      style={{maskType: "luminance"}}
       maskUnits="userSpaceOnUse"
       x="3"
       y="4"
@@ -758,7 +758,7 @@ export const InstagramSvg = () => (
     />
     <mask
       id="mask0_125_6010"
-      style="mask-type:luminance"
+      style={{maskType: "luminance"}}
       maskUnits="userSpaceOnUse"
       x="2"
       y="2"

@@ -18,10 +18,10 @@ export default {
       'hero': '#FAF2EE',
       'secondary': '#7745E0',
       'primary': '#FF932F',
+      'graycolor1': '#F7F8F9',
       'badge': '#DCFCE7',
       'ligth_text': 'rgba(35, 32, 42, 0.6)',
-      'bold_text': '#23202A',
-      'gradient': 'linear-gradient(189.52deg, #FFB571 -10.41%, #FA7800 106.43%)'
+      'bold_text': '#23202A'
     }
   },
   plugins: [],

@@ -7,7 +7,6 @@ import { LoginForm } from "./components/login_form/LoginForm";
 function App() {
   return (
     <>
-      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginForm />} />
