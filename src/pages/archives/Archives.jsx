@@ -1,7 +1,7 @@
-import React from 'react'
+import { Table } from "../../components";
 
-export const Archives = () => {
-  return (
-    <div>Archives</div>
-  )
-}
+export const Archives = () => (
+  <>
+    <Table />
+  </>
+);

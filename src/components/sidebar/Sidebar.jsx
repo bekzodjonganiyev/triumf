@@ -46,7 +46,7 @@ export const Sidebar = () => {
     },
   ];
   return (
-    <div className="bg-sidebar p-5 rounded-tr-[50px] rounded-br-[50px] h-screen">
+    <aside className="bg-sidebar p-5 rounded-tr-[50px] rounded-br-[50px] h-full">
       <img src={logo} alt="Triumf logo" />
       <ul>
         {items.map((item) => (
@@ -58,6 +58,6 @@ export const Sidebar = () => {
           </li>
         ))}
       </ul>
-    </div>
+    </aside>
   );
 };

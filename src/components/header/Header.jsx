@@ -1,9 +1,15 @@
-import React from 'react'
+import { NotificationSvg } from "../../assets/icons";
 
 export const Header = () => {
   return (
-    <header className='py-10 px-5 bg-slate-200'>
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci, officiis itaque excepturi maiores quas ipsa eveniet quidem nam nisi quo architecto quae vel alias, fugiat aliquam deleniti in? Maiores, odio.
+    <header className="py-10 px-5">
+      <div className=" flex justify-between items-center">
+        <h1>Page name</h1>
+        <span className="w-11 h-11 flex items-center justify-center gradient rounded-full p-2">
+          <NotificationSvg />
+        </span>
+      </div>
+      <hr class="border-1 border-slate-300 mt-6"/>
     </header>
-  )
-}
+  );
+};

@@ -13,7 +13,7 @@ export const CircularStatistics = ({ total, delivered, url }) => {
     );
   }, []);
   return (
-    <div className="flex items-center gap-10 border border-gray-400 p-10 rounded-xl w-[500px]">
+    <div className="flex items-center gap-10 border border-gray-400 p-10 rounded-xl w-1/2">
       <Progress
         type="circle"
         percent={Math.trunc((delivered * 100) / total)}
