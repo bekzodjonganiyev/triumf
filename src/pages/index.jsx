@@ -1,11 +1,12 @@
-import { lazyImport } from "../helper/lazyImport.helper";
+import { lazy } from "react";
 
-const Organizations = lazyImport("../pages/organizations/Organizations", "Organizations"); 
-const Couriers = lazyImport("../pages/couriers/Couriers", "Couriers"); 
-const Statistics = lazyImport("../pages/statistics/Statistics", "Statistics"); 
-const Incomes = lazyImport("../pages/incomes/Incomes", "Incomes"); 
-const Archives = lazyImport("../pages/archives/Archives", "Archives"); 
-const Admins = lazyImport("../pages/admins/Admins", "Admins"); 
+const Organizations = lazy(() => import("./organizations/Organizations").then(module => ({default: module.Organizations})))
+const Couriers = lazy(() => import("./couriers/Couriers").then(module => ({default: module.Couriers})))
+const Statistics = lazy(() => import("./statistics/Statistics").then(module => ({default: module.Statistics})))
+const Incomes = lazy(() => import("./incomes/Incomes").then(module => ({default: module.Incomes})))
+const Archives = lazy(() => import("./archives/Archives").then(module => ({default: module.Archives})))
+const Admins = lazy(() => import("./admins/Admins").then(module => ({default: module.Admins})))
+
 
 export {
     Organizations,
