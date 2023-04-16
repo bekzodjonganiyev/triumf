@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
@@ -8,17 +7,13 @@ import truimfLogo from "../../assets/images/triumf.png";
 import apiClient from "../../helper/apiClient";
 
 export const LoginForm = () => {
-  const navigate = useNavigate();
-
-  const { mutate, isLoading, isError, isSuccess, error,  } = useMutation({
+  const { mutate, isLoading, isError, isSuccess, error } = useMutation({
     mutationFn: (data) => {
       return apiClient.add("login/", data);
     },
-    onSuccess: ({data}) => {
-      localStorage.setItem("token", data?.token)
-      setTimeout(() => {
-        window.location.href = "/"
-      }, 2000);
+    onSuccess: ({ data }) => {
+      localStorage.setItem("token", data?.token);
+      window.location.href = "/";
     },
   });
 
@@ -29,11 +24,11 @@ export const LoginForm = () => {
       username: e.target.tel.value,
       password: e.target.password.value,
     });
-     console.log(res)
+    console.log(res);
   };
 
   return (
-    <div className="w-full bg-sidebar">
+    <div className="w-full h-screen bg-sidebar py-10">
       <div className="container px-8 mx-auto flex items-center gap-20">
         <div>
           <img src={illustration} alt="Login illustration" />

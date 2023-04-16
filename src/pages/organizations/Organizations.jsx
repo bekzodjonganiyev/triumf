@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 
 import { Corparation } from "../../assets/icons";
 import { Card } from "../../components";
@@ -13,14 +12,14 @@ export const Organizations = () => {
   });
 
   const organizations = data?.data.map((item) => ({
+    id: item.id,
     icon: item.icon ?? <Corparation />,
     name: item.name,
-    firstUrl: "list",
-    secondUrl: "profil",
+    firstUrl: `list/${item.id}`,
+    secondUrl: `profile/${item.id}`,
     firstActionTitle: "Ro'yxatlar",
     secondActionTitle: "Profil",
   }));
-
 
   if (isLoading) return "Loading...";
 

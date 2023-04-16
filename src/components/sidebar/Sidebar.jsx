@@ -1,4 +1,4 @@
-import {useRef} from "react";
+import { useRef } from "react";
 import { NavLink } from "react-router-dom";
 import {
   AddAdminSvg,
@@ -7,17 +7,18 @@ import {
   Curiers,
   Income,
   StatisticsSvg,
+  LogOutSvg,
 } from "../../assets/icons";
 
 import logo from "../../assets/images/triumf.png";
 
 export const Sidebar = () => {
-  const svgRef = useRef(null)
+  const svgRef = useRef(null);
   const items = [
     {
       icon: <Corparation />,
       name: "Tashkilot",
-      url: "/",
+      url: "/organizations",
     },
     {
       icon: <Curiers />,
@@ -51,13 +52,26 @@ export const Sidebar = () => {
       <ul>
         {items.map((item) => (
           <li key={item.name}>
-            <NavLink to={item.url} className="flex gap-4 py-3 px-4 rounded-lg">
+            <NavLink
+              to={item.url}
+              className="flex gap-4 py-3 px-4 rounded-lg"
+            >
               <span ref={svgRef}>{item.icon}</span>
               <p>{item.name}</p>
             </NavLink>
           </li>
         ))}
       </ul>
+
+      <button
+        className="text-red-600 flex mt-10 ml-4"
+        onClick={() => {
+          localStorage.removeItem("token");
+          window.location.href = "https://triumf-landing.netlify.app/";
+        }}
+      >
+        <LogOutSvg /> Chiqish
+      </button>
     </aside>
   );
 };
