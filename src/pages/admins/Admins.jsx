@@ -3,7 +3,7 @@ import { Modal } from "antd";
 import { useState } from "react";
 
 import { Corparation } from "../../assets/icons";
-import { Card } from "../../components";
+import { Card, FetchingLoader } from "../../components";
 
 import apiClient from "../../helper/apiClient";
 
@@ -25,7 +25,7 @@ export const Admins = () => {
     secondActionTitle: "O'chirish",
   }));
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return <FetchingLoader/>;
 
   if (error) return "An error has occurred: " + error.message;
 

@@ -1,7 +1,8 @@
-import { Table } from "../../components";
+import { FunctionalHeader, Table } from "../../components";
 
 export const Archives = () => (
   <>
+    <FunctionalHeader />
     <Table />
   </>
 );

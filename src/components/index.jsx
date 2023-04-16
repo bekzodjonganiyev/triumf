@@ -1,6 +1,7 @@
 import { lazy } from "react";
 
-import {Loader} from "./loader/Loader"
+import {Loader, FetchingLoader} from "./loader/Loader"
+import { FunctionalHeader } from "./functional_header/FunctionalHeader";
 
 const Card = lazy(() => import("./card/Card").then(module => ({default: module.Card})))
 const CircularStatistics = lazy(() => import("./circular_statistics/CircularStatistics").then(module => ({default: module.CircularStatistics})))
@@ -22,5 +23,7 @@ export {
     Table, 
     MoneyCard,
     ProtectedRoute,
-    Loader
+    Loader,
+    FetchingLoader,
+    FunctionalHeader    
 };

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Modal } from 'antd';
 
 import { Corparation } from "../../assets/icons";
-import { Card } from "../../components";
+import { Card, FetchingLoader } from "../../components";
 
 import apiClient from "../../helper/apiClient";
 
@@ -25,7 +25,7 @@ export const Couriers = () => {
     secondActionTitle: "Profil",
   }));
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return <FetchingLoader />;
 
   if (error) return "An error has occurred: " + error.message;
 
