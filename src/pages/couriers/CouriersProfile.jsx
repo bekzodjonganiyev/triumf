@@ -1,7 +1,5 @@
 import {Outlet, Link} from "react-router-dom"
 
-import a from "../../assets/images/aa.png";
-
 export const CouriersProfile = () => {
   return (
     <div>
