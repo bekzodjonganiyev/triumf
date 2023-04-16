@@ -17,7 +17,7 @@ export const Sidebar = () => {
     {
       icon: <Corparation />,
       name: "Tashkilot",
-      url: "/organizations",
+      url: "/",
     },
     {
       icon: <Curiers />,
@@ -46,11 +46,11 @@ export const Sidebar = () => {
     },
   ];
   return (
-    <aside className="bg-sidebar p-5 rounded-tr-[50px] rounded-br-[50px] h-full">
+    <aside className="bg-sidebar p-8 rounded-tr-[50px] rounded-br-[50px] h-full">
       <img src={logo} alt="Triumf logo" />
       <ul>
         {items.map((item) => (
-          <li>
+          <li key={item.name}>
             <NavLink to={item.url} className="flex gap-4 py-3 px-4 rounded-lg">
               <span ref={svgRef}>{item.icon}</span>
               <p>{item.name}</p>

@@ -9,7 +9,7 @@ const Sidebar = lazy(() => import("./sidebar/Sidebar").then(module => ({default:
 const MoneyCard = lazy(() => import("./money_card/MoneyCard").then(module => ({default: module.MoneyCard})))
 const Loader = lazy(() => import("./loader/Loader").then(module => ({default: module.Loader})))
 const Table = lazy(() => import("./table/Table").then(module => ({default: module.Table})))
-
+const ProtectedRoute = lazy(() => import("./protected_route/ProtectedRoute").then(module => ({default: module.ProtectedRoute})))
 
 export { 
     Card,
@@ -20,5 +20,6 @@ export {
     Sidebar,
     Table, 
     MoneyCard,
+    ProtectedRoute,
     Loader
 };

@@ -1,8 +1,10 @@
+import axios from "axios"
+
 export const http = axios.create({
-    baseURL: 'http://localhost:5000/',
+    baseURL: 'https://triumf.pythonanywhere.com/api/v1/dashboard/',
     headers: {
       'Content-Type': 'application/json',
       "Accept": "application/json",
-      "Token": localStorage.getItem("token")
+      "Authorization": `Bearer ${localStorage.getItem("token")}`
     }
   });

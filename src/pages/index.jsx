@@ -6,6 +6,7 @@ const Statistics = lazy(() => import("./statistics/Statistics").then(module => (
 const Incomes = lazy(() => import("./incomes/Incomes").then(module => ({default: module.Incomes})))
 const Archives = lazy(() => import("./archives/Archives").then(module => ({default: module.Archives})))
 const Admins = lazy(() => import("./admins/Admins").then(module => ({default: module.Admins})))
+const LoginForm = lazy(() => import("./login/Login").then(module => ({default: module.LoginForm})))
 
 
 export {
@@ -15,4 +16,5 @@ export {
     Incomes,
     Archives,
     Admins,
+    LoginForm
 }

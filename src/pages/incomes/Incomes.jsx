@@ -6,7 +6,7 @@ export const Incomes = () => {
     <div>
       {
         [1,2,3,4].map(item => (
-          <MoneyCard count={1000000} isPaid={true} hasStatus={true}/>
+          <MoneyCard key={item} count={1000000} isPaid={true} hasStatus={true}/>
         ))
       }
     </div>
