@@ -1,9 +1,15 @@
-import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
+import { Suspense, useEffect } from "react";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 
 import { Sidebar, Header, Loader } from "..";
 
 export const Layout = () => {
+  const {pathname} = useLocation()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (pathname === "/") {navigate("/organizations")}
+  }, [])
   return (
     <Suspense fallback={<Loader />}>
       <div className="flex w-screen h-screen">
