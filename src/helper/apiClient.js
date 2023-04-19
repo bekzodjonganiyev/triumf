@@ -1,24 +1,34 @@
+import axios from "axios";
+
 import { http } from "./http";
 
 class ClientApiService {
-  getAll(url){
-    return http.get(url)
+  getAll(url) {
+    return http.get(url);
   }
 
-  getById(url, id){
-    return http.get(`${url}/${id}`)
+  getById(url, id) {
+    return http.get(`${url}/${id}`);
   }
 
-  add(url, data){
-    return http.post(url, data)
+  add(url, data) {
+    return http.post(url, data);
   }
 
-  update(url, id, data){
-    return http.put(`${url}/${id}`, data)
+  update(url, id, data) {
+    return http.put(`${url}/${id}`, data);
   }
 
-  delete(id){
-    return http.delete(id)
+  delete(id) {
+    return http.delete(id);
+  }
+
+  getRoles() {
+    axios.defaults.baseURL = "https://triumf.pythonanywhere.com/api/v1/";
+    axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
+    axios.defaults.headers.post["Content-Type"] =
+      "application/x-www-form-urlencoded";
+    return axios.get("profile/");
   }
 }
 

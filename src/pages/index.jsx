@@ -13,6 +13,10 @@ const Archives = lazy(() => import("./archives/Archives").then(module => ({defau
 const Admins = lazy(() => import("./admins/Admins").then(module => ({default: module.Admins})))
 const LoginForm = lazy(() => import("./login/Login").then(module => ({default: module.LoginForm})))
 
+const User_List = lazy(() => import("./user/list/List").then(module => ({default: module.User_List})))
+const User_Statistics = lazy(() => import("./user/statistics/Stataistics").then(module => ({default: module.User_Statistics})))
+const User_Archive = lazy(() => import("./user/archive/Archive").then(module => ({default: module.User_Archive})))
+
 
 export {
     Organizations,
@@ -24,5 +28,8 @@ export {
     Incomes,
     Archives,
     Admins,
-    LoginForm
+    LoginForm,
+    User_List,
+    User_Statistics,
+    User_Archive,
 }

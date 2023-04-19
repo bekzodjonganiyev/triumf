@@ -8,13 +8,15 @@ import {
   Income,
   StatisticsSvg,
   LogOutSvg,
+  ListSvg,
 } from "../../assets/icons";
 
 import logo from "../../assets/images/triumf.png";
 
-export const Sidebar = () => {
+export const Sidebar = ({role, name}) => {
   const svgRef = useRef(null);
-  const items = [
+
+  const superAdminItems = [
     {
       icon: <Corparation />,
       name: "Tashkilot",
@@ -46,10 +48,29 @@ export const Sidebar = () => {
       url: "/admins",
     },
   ];
+  const orgItems = [
+    {
+      icon: <ListSvg />,
+      name: "Ro'yxatlar",
+      url: `/${name}/lists`,
+    },
+    {
+      icon: <StatisticsSvg />,
+      name: "Statistika",
+      url: `/${name}/statistics`,
+    },
+    {
+      icon: <ArchiveSvg />,
+      name: "Arxiv",
+      url: `/${name}/archives`,
+    }
+  ]
+   
+  const items = role === "Organization" ? orgItems : superAdminItems
   return (
     <aside className="bg-sidebar p-8 rounded-tr-[50px] rounded-br-[50px] h-full">
       <img src={logo} alt="Triumf logo" />
-      <ul>
+      <ul className="mt-10">
         {items.map((item) => (
           <li key={item.name}>
             <NavLink

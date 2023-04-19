@@ -13,6 +13,9 @@ import {
   Admins,
   Statistics,
   LoginForm,
+  User_List,
+  User_Statistics,
+  User_Archive
 } from "./pages";
 import { Layout, ProtectedRoute, Loader } from "./components";
 
@@ -32,7 +35,8 @@ function App() {
             </Suspense>
           }
         >
-          <Route index element={<Organizations />} />
+          {/* SUPER USER ROUTES */}
+          <Route index element={<></>} />
           <Route path="organizations" element={<Organizations />} />
           <Route path="organizations/list/:id" element={<OrganizationsList />} />
           <Route path="organizations/profile/:id" element={<OrganizationsProfile />}>
@@ -51,6 +55,11 @@ function App() {
           <Route path="incomes" element={<Incomes />} />
           <Route path="archive" element={<Archives />} />
           <Route path="admins" element={<Admins />} />
+
+          {/* SIMPLE USER(ORGANIZATION) ROUTES */}
+          <Route path="/:name/lists" element={<User_List/>} />
+          <Route path="/:name/statistics" element={<User_Statistics />} />
+          <Route path="/:name/archives" element={<User_Archive />} />
         </Route>
         <Route path="/triumf-enter" element={<LoginForm />} />
 
