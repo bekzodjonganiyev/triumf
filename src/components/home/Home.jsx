@@ -99,8 +99,8 @@ export const Home = () => {
 
           <div className="flex justify-between mt-20">
             <div className="flex flex-wrap gap-20 w-1/2 text-center">
-              {numbers.map((item) => (
-                <div className="w-[262px] flex flex-col gap-4">
+              {numbers.map((item, i) => (
+                <div key={i} className="w-[262px] flex flex-col gap-4">
                   <p className="text-4xl font-extrabold text-bold_text">
                     {item.number}
                   </p>
@@ -125,8 +125,8 @@ export const Home = () => {
         <div className="mt-8">
           <div className="flex items-start flex-row-reverse justify-between mt-20 gap-44 ">
             <div className="flex flex-col gap-20 w-1/2">
-              {comforts.map((item) => (
-                <div className="flex items-start gap-4">
+              {comforts.map((item, i) => (
+                <div key={i} className="flex items-start gap-4">
                   <span className="gradient rounded-md p-4">{item.icon}</span>
                   <div className="w-[400px]">
                     <p className="text-xl font-extrabold text-bold_text">

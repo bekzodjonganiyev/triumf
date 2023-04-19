@@ -8,9 +8,9 @@ export const TrustedOrganization = () => {
         Bizga ishonch bildirgan tashkilotlar
       </p>
 
-      <div className="flex items-center justify-between mt-5">
+      <div className="flex items-center justify-between flex-wrap mt-5">
         {[1, 2, 3, 4].map((i) => (
-          <div className="p-20 bg-graycolor1 rounded-2xl">
+          <div key={i} className="p-20 bg-graycolor1 rounded-2xl">
             <span>
               <TashkilotLogo_1 />
             </span>
