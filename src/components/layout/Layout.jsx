@@ -12,6 +12,7 @@ export const Layout = () => {
   const { isSuccess, error, data, isLoading } = useQuery({
     queryKey: ["roles"],
     queryFn: () => apiClient.getRoles(),
+    refetchOnWindowFocus:  false
   });
 
   const [roles, setRoles] = useState({});

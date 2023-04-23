@@ -7,20 +7,20 @@ class ClientApiService {
     return http.get(url);
   }
 
-  getById(url, id) {
-    return http.get(`${url}/${id}`);
+  getById(url) {
+    return http.get(url);
   }
 
   add(url, data) {
     return http.post(url, data);
   }
 
-  update(url, id, data) {
-    return http.put(`${url}/${id}`, data);
+  update(url, data) {
+    return http.put(url, data);
   }
 
-  delete(id) {
-    return http.delete(id);
+  delete(url) {
+    return http.delete(url);
   }
 
   getRoles() {

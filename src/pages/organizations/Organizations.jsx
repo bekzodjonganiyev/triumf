@@ -1,14 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { Modal } from "antd";
+import { useState } from "react";
 
-import { Corparation } from "../../assets/icons";
-import { Card, FetchingLoader } from "../../components";
+import { AddSvg, Corparation } from "../../assets/icons";
+import {
+  AddAndUpdateForm,
+  Card,
+  FetchingLoader,
+  FunctionalHeader,
+} from "../../components";
 
 import apiClient from "../../helper/apiClient";
 
 export const Organizations = () => {
-  const { isLoading, error, data, isFetching } = useQuery({
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isLoading, error, data } = useQuery({
     queryKey: ["organizations"],
-    queryFn: () => apiClient.getAll("organizations"),
+    queryFn: () => apiClient.getAll("organizations/"),
   });
 
   const organizations = data?.data.map((item) => ({
@@ -26,10 +34,32 @@ export const Organizations = () => {
   if (error) return "An error has occurred: " + error.message;
 
   return (
-    <div className="grid grid-cols-5 gap-10">
-      {organizations.map((item) => (
-        <Card key={item.name} obj={item} />
-      ))}
-    </div>
+    <>
+      {isModalOpen ? (
+        <AddAndUpdateForm
+          hasImg={false}
+          url="organizations/"
+          type="add"
+          component="organizations"
+          handleClose={() => setIsModalOpen(false)}
+          title="Tashkilot qo'shish"
+        />
+      ) : null}
+      <FunctionalHeader
+        count={500}
+        payment={"520 500 UZS"}
+        hasStatistic={false}
+        hasAddBtn={true}
+        text="Tashkilot qo'shish"
+        icon={<AddSvg />}
+        handleBtn={() => setIsModalOpen(true)}
+        classNames="justify-end gap-10 mb-10"
+      />
+      <div className="flex flex-wrap gap-6">
+        {organizations.map((item) => (
+          <Card key={item.name} obj={item} />
+        ))}
+      </div>
+    </>
   );
 };

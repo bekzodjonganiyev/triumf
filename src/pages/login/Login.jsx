@@ -24,7 +24,6 @@ export const LoginForm = () => {
       username: e.target.tel.value,
       password: e.target.password.value,
     });
-    console.log(res);
   };
 
   return (

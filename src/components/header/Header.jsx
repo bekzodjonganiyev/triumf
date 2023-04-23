@@ -9,7 +9,7 @@ export const Header = () => {
           <NotificationSvg />
         </span>
       </div>
-      <hr class="border-1 border-slate-300 mt-6"/>
+      <hr className="border-1 border-slate-300 mt-6"/>
     </header>
   );
 };

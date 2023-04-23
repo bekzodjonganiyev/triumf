@@ -12,6 +12,7 @@ const Sidebar = lazy(() => import("./sidebar/Sidebar").then(module => ({default:
 const MoneyCard = lazy(() => import("./money_card/MoneyCard").then(module => ({default: module.MoneyCard})))
 const Table = lazy(() => import("./table/Table").then(module => ({default: module.Table})))
 const ProtectedRoute = lazy(() => import("./protected_route/ProtectedRoute").then(module => ({default: module.ProtectedRoute})))
+const AddAndUpdateForm = lazy(() => import("./add_&_update-form/AddAndUpdateForm").then(module => ({default: module.AddAndUpdateForm})))
 
 export { 
     Card,
@@ -23,6 +24,7 @@ export {
     Table, 
     MoneyCard,
     ProtectedRoute,
+    AddAndUpdateForm,
     Loader,
     FetchingLoader,
     FunctionalHeader    
