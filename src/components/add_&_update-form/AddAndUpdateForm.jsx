@@ -300,7 +300,7 @@ export const AddAndUpdateForm = ({
         onConfirm={() => deleteMutation.mutate(urlById)}
       >
         <button className="bg-none text-red-600 underline text-lg text-center inline w-full mt-5">
-          {urlById ? (
+          {urlById && component !== "admins" ? (
             <>
               {deleteMutation.isLoading ? (
                 <Spin

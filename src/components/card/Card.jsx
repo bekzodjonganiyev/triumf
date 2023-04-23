@@ -11,6 +11,7 @@ export const Card = ({ obj, hasEvent1, hasEvent2, handleBtn1, handleBtn2 }) => {
             src={obj.icon}
             alt={obj.title}
             className="w-full rounded-full h-full object-cover"
+            loading="lazy"
           />
         ) : (
           <span>
