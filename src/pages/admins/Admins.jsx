@@ -56,16 +56,18 @@ export const Admins = () => {
           component="admins"
           handleClose={() => setModal2Open(false)}
           title="Admin qo'shish"
+          imgKey={"avatar"}
         />
       )}
       {modal2Open && modalConfig.type === "update" && (
         <AddAndUpdateForm
           hasImg={true}
-          urlById={`admins/${modalConfig.id}`}
+          urlById={`admins/${modalConfig.id}/`}
           type="update"
           component="admins"
           handleClose={() => setModal2Open(false)}
           title="Malumotlarni o'zgartirish"
+          imgKey={"avatar"}
         />
       )}
       <FunctionalHeader
@@ -91,7 +93,7 @@ export const Admins = () => {
             setModal2Open(true);
             setModalConfig({ type: "update", id: item.id });
           }}
-          handleBtn2={() => deleteMutation.mutate(`admins/${item.id}`)}
+          handleBtn2={() => deleteMutation.mutate(`admins/${item.id}/`)}
         />
       ))}
     </div>

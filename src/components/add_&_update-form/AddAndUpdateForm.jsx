@@ -20,7 +20,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import apiClient from "../../helper/apiClient";
 
 export const AddAndUpdateForm = ({
-  hasImg,
+  imgKey,
   type,
   component,
   url,
@@ -99,7 +99,7 @@ export const AddAndUpdateForm = ({
       formData.append("is_add_admin", adminValues.is_add_admin ?? false);
       formData.append("is_active", status);
     }
-    type !== "add" && formData.append("icon", fileList[0].originFileObj);
+    type !== "add" && formData.append(imgKey, fileList[0].originFileObj);
 
     addAndUpdateMutation.mutate(formData);
   };

@@ -43,6 +43,7 @@ export const Organizations = () => {
           component="organizations"
           handleClose={() => setIsModalOpen(false)}
           title="Tashkilot qo'shish"
+          imgKey={"icon"}
         />
       ) : null}
       <FunctionalHeader
