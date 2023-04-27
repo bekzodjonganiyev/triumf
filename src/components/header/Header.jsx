@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom"
+
 import logo from "../../assets/images/triumf-logo.png"
 
 export const Header = () => {
@@ -13,7 +15,7 @@ export const Header = () => {
                 <li><a href="#bizbilanaloqa" className="">Biz bilan aloqa</a></li>
             </ul>
             <div>
-                <a href="https://triumf-admin.netlify.app/" className="bg-primary text-white py-3 px-10 rounded-[24px]">Login</a>
+                <Link to="/userLogin" className="bg-primary text-white py-3 px-10 rounded-[24px]">Login</Link>
             </div>
         </div>
     </header>
