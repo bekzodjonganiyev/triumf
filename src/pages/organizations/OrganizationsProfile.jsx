@@ -1,6 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { Modal } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
 import { Corparation, EditSvg } from "../../assets/icons";

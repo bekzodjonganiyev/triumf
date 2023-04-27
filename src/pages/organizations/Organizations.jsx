@@ -1,5 +1,4 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { Modal } from "antd";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { AddSvg, Corparation } from "../../assets/icons";
@@ -14,6 +13,7 @@ import apiClient from "../../helper/apiClient";
 
 export const Organizations = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
   const { isLoading, error, data } = useQuery({
     queryKey: ["organizations"],
     queryFn: () => apiClient.getAll("organizations/"),

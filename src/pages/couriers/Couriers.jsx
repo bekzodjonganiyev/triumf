@@ -1,20 +1,23 @@
-import { useState } from 'react';
 import { useQuery } from "@tanstack/react-query";
-import { Modal } from 'antd';
+import { useState } from "react";
 
-import { Corparation } from "../../assets/icons";
-import { Card, FetchingLoader } from "../../components";
+import { AddSvg, Corparation } from "../../assets/icons";
+import {
+  AddAndUpdateForm,
+  Card,
+  FetchingLoader,
+  FunctionalHeader,
+} from "../../components";
 
 import apiClient from "../../helper/apiClient";
 
 export const Couriers = () => {
-  const [modal2Open, setModal2Open] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["couriers"],
     queryFn: () => apiClient.getAll("couriers/"),
   });
-  
 
   const couriers = data?.data.map((item) => ({
     icon: item.avatar ?? <Corparation />,
@@ -31,19 +34,34 @@ export const Couriers = () => {
 
   return (
     <div className="flex flex-wrap gap-10">
-      <Modal
-        title="Vertically centered modal dialog"
-        centered
-        open={modal2Open}
-        onOk={() => setModal2Open(false)}
-        onCancel={() => setModal2Open(false)}
-      >
-        <p>some contents...</p>
-        <p>some contents...</p>
-        <p>some contents...</p>
-      </Modal> 
+      {isModalOpen ? (
+        <AddAndUpdateForm
+          hasImg={false}
+          url="organizations/"
+          type="add"
+          component="organizations"
+          handleClose={() => setIsModalOpen(false)}
+          title="Tashkilot qo'shish"
+          imgKey={"icon"}
+        />
+      ) : null}
+      <FunctionalHeader
+        count={500}
+        payment={"520 500 UZS"}
+        hasStatistic={false}
+        hasAddBtn={true}
+        text="Tashkilot qo'shish"
+        icon={<AddSvg />}
+        handleBtn={() => setIsModalOpen(true)}
+        classNames="justify-end gap-10 mb-10"
+      />
       {couriers.map((item) => (
-        <Card key={item.name} obj={item} hasEvent1={true} handleBtn1={() => setModal2Open(true)}/>
+        <Card
+          key={item.name}
+          obj={item}
+          hasEvent1={true}
+          handleBtn1={() => setIsModalOpen(true)}
+        />
       ))}
     </div>
   );

@@ -38,9 +38,9 @@ export const Card = ({ obj, hasEvent1, hasEvent2, handleBtn1, handleBtn2 }) => {
 
       {hasEvent2 ? (
         <Popconfirm
-          title="Delete the task?"
-          okText="Yes"
-          cancelText="No"
+          title="Ishonchingiz komilmi?"
+          okText="Ha"
+          cancelText="Yo'q"
           onConfirm={() => handleBtn2()}
           okButtonProps={{style: {background: "red"}}}
         >
