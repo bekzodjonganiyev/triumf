@@ -13,7 +13,7 @@ export const LoginForm = () => {
     },
     onSuccess: ({ data }) => {
       localStorage.setItem("token", data?.token);
-      window.location.href = "/";
+      window.location.href = "/"
     },
   });
 

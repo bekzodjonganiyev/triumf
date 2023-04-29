@@ -9,51 +9,44 @@ export const Layout = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
 
-  const { isSuccess, data, isLoading } = useQuery({
+  const { isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: () => apiClient.getRoles(),
-    onSuccess: (data) => {setUser({...data?.data?.user})},
+    onSuccess: (data) => {
+      setUser({ ...data?.data?.user });
+    },
     refetchOnWindowFocus: false,
   });
 
   const notAllowedPath = pathname.split("/")[1];
-  const notAllowedPathnames = [
-    "organizations",
-    "couriers",
-    "statistics",
-    "incomes",
-    "archive",
-    "admins",
-  ];
-
+  const pathSecurityFunc = (path) => {
+    const arr = [
+      { name: "organizations", access: user?.is_organizations },
+      { name: "couriers", access: user?.is_courier },
+      { name: "statistics", access: user?.is_statistic },
+      { name: "incomes", access: user?.is_incomes },
+      { name: "archive", access: user?.is_archive },
+      { name: "admins", access: user?.is_add_admin },
+    ];
+    const notAllowedPathnames = arr.filter((item) => item?.access === false);
+    
+    notAllowedPathnames.forEach((item) => {
+      if (item.name === path) navigate("/not-allowed");
+    });
+  };
+  
   useEffect(() => {
     pathSecurityFunc(notAllowedPath);
-  }, [pathname]);
+  }, [pathname, pathSecurityFunc]);
 
-  const pathSecurityFunc = (path) => {
-    let role = "";
-    if (isSuccess) {
-      role = data?.data?.role;
-    }
-
-    if (role === "Organization") {
-      notAllowedPathnames.forEach((item) => {
-        if (item === path) navigate("/");
-      });
-    }
-  };
-  console.log(user)
 
   if (isLoading) return <Loader />;
   return (
     <Suspense fallback={<Loader />}>
       <div className="flex w-screen h-screen">
-        <Sidebar
-          role={data?.data?.role ?? ""}
-          name={data?.data?.user?.name ?? ""}
-        />
+        <Sidebar permissionKeys={user} />
         <section className="flex flex-col flex-grow">
           <Header />
           <main className="px-5 flex-grow overflow-y-scroll custom-scrollbar">

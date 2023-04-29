@@ -13,7 +13,7 @@ import {
 
 import logo from "../../assets/images/triumf.png";
 
-export const Sidebar = ({role, name}) => {
+export const Sidebar = ({ permissionKeys }) => {
   const svgRef = useRef(null);
 
   const superAdminItems = [
@@ -21,62 +21,52 @@ export const Sidebar = ({role, name}) => {
       icon: <Corparation />,
       name: "Tashkilot",
       url: "/organizations",
+      permissionKey: permissionKeys.is_organizations,
     },
     {
       icon: <Curiers />,
       name: "Kuriyerlar",
       url: "/couriers",
+      permissionKey: permissionKeys.is_courier,
     },
     {
       icon: <StatisticsSvg />,
       name: "Statistika",
       url: "/statistics",
+      permissionKey: permissionKeys.is_statistic,
     },
     {
       icon: <Income />,
       name: "Tushumlar",
       url: "/incomes",
+      permissionKey: permissionKeys.is_incomes,
     },
     {
       icon: <ArchiveSvg />,
       name: "Arxiv",
       url: "/archive",
+      permissionKey: permissionKeys.is_archive,
     },
     {
       icon: <AddAdminSvg />,
       name: "Admin qo'shish",
       url: "/admins",
+      permissionKey: permissionKeys.is_add_admin,
     },
   ];
-  const orgItems = [
-    {
-      icon: <ListSvg />,
-      name: "Ro'yxatlar",
-      url: `/${name}/lists`,
-    },
-    {
-      icon: <StatisticsSvg />,
-      name: "Statistika",
-      url: `/${name}/statistics`,
-    },
-    {
-      icon: <ArchiveSvg />,
-      name: "Arxiv",
-      url: `/${name}/archives`,
-    }
-  ]
-   
-  const items = role === "Organization" ? orgItems : superAdminItems
+
+  const userAccess = (arr) => {
+    const isSuperAdmin = "is_active" in permissionKeys
+    return !isSuperAdmin ? arr : arr.filter((item) => item.permissionKey);
+  };
+  
   return (
     <aside className="bg-sidebar p-8 rounded-tr-[50px] rounded-br-[50px] h-full">
       <img src={logo} alt="Triumf logo" />
       <ul className="mt-10">
-        {items.map((item) => (
+        {userAccess(superAdminItems).map((item) => (
           <li key={item.name}>
-            <NavLink
-              to={item.url}
-              className="flex gap-4 py-3 px-4 rounded-lg"
-            >
+            <NavLink to={item.url} className="flex gap-4 py-3 px-4 rounded-lg">
               <span ref={svgRef}>{item.icon}</span>
               <p>{item.name}</p>
             </NavLink>

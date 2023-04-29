@@ -13,9 +13,6 @@ import {
   Admins,
   Statistics,
   LoginForm,
-  User_List,
-  User_Statistics,
-  User_Archive
 } from "./pages";
 import { Layout, ProtectedRoute, Loader } from "./components";
 
@@ -38,18 +35,50 @@ function App() {
           {/* SUPER USER ROUTES */}
           <Route index element={<></>} />
           <Route path="organizations" element={<Organizations />} />
-          <Route path="organizations/list/:id" element={<OrganizationsList />} />
-          <Route path="organizations/profile/:id" element={<OrganizationsProfile />}>
-            <Route path="statistika" element={<h1 className="text-red-400">Statistika malumotlari bor</h1>} />
-            <Route path="xisob" element={<h1 className="text-red-400">Xisob-kitob malumotlari bor</h1>} />
-            <Route path="arxiv" element={<h1 className="text-red-400">Arxiv malumotlari bor</h1>} />
+          <Route
+            path="organizations/list/:id"
+            element={<OrganizationsList />}
+          />
+          <Route
+            path="organizations/profile/:id"
+            element={<OrganizationsProfile />}
+          >
+            <Route
+              path="statistika"
+              element={
+                <h1 className="text-red-400">Statistika malumotlari bor</h1>
+              }
+            />
+            <Route
+              path="xisob"
+              element={
+                <h1 className="text-red-400">Xisob-kitob malumotlari bor</h1>
+              }
+            />
+            <Route
+              path="arxiv"
+              element={<h1 className="text-red-400">Arxiv malumotlari bor</h1>}
+            />
           </Route>
 
           <Route path="couriers" element={<Couriers />} />
           <Route path="couriers/profile/:id" element={<CouriersProfile />}>
-            <Route path="statistika" element={<h1 className="text-red-400">Statistika malumotlari bor</h1>} />
-            <Route path="xisob" element={<h1 className="text-red-400">Xisob-kitob malumotlari bor</h1>} />
-            <Route path="arxiv" element={<h1 className="text-red-400">Arxiv malumotlari bor</h1>} />
+            <Route
+              path="statistika"
+              element={
+                <h1 className="text-red-400">Statistika malumotlari bor</h1>
+              }
+            />
+            <Route
+              path="xisob"
+              element={
+                <h1 className="text-red-400">Xisob-kitob malumotlari bor</h1>
+              }
+            />
+            <Route
+              path="arxiv"
+              element={<h1 className="text-red-400">Arxiv malumotlari bor</h1>}
+            />
           </Route>
           <Route path="statistics" element={<Statistics />} />
           <Route path="incomes" element={<Incomes />} />
@@ -57,12 +86,16 @@ function App() {
           <Route path="admins" element={<Admins />} />
 
           {/* SIMPLE USER(ORGANIZATION) ROUTES */}
-          <Route path="/:name/lists" element={<User_List/>} />
-          <Route path="/:name/statistics" element={<User_Statistics />} />
-          <Route path="/:name/archives" element={<User_Archive />} />
+          <Route
+            path="/not-allowed"
+            element={
+              <h1 className="text-center text-3xl mt-32">
+                Bu bo'limga kirishga huquqinigiz yo'q
+              </h1>
+            }
+          />
         </Route>
         <Route path="/triumf-enter" element={<LoginForm />} />
-
       </Routes>
     </QueryClientProvider>
   );
