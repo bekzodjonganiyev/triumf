@@ -88,7 +88,7 @@ export const Sidebar = ({role, name}) => {
         className="text-red-600 flex mt-10 ml-4"
         onClick={() => {
           localStorage.removeItem("token");
-          window.location.href = "https://triumf-landing.netlify.app/";
+          window.location.href = "/triumf-enter";
         }}
       >
         <LogOutSvg /> Chiqish

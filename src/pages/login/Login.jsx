@@ -20,7 +20,7 @@ export const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const res = mutate({
+    mutate({
       username: e.target.tel.value,
       password: e.target.password.value,
     });

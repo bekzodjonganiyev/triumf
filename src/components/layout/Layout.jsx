@@ -9,13 +9,15 @@ export const Layout = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const { isSuccess, error, data, isLoading } = useQuery({
-    queryKey: ["roles"],
+  const [user, setUser] = useState({})
+
+  const { isSuccess, data, isLoading } = useQuery({
+    queryKey: ["user"],
     queryFn: () => apiClient.getRoles(),
-    refetchOnWindowFocus:  false
+    onSuccess: (data) => {setUser({...data?.data?.user})},
+    refetchOnWindowFocus: false,
   });
 
-  const [roles, setRoles] = useState({});
   const notAllowedPath = pathname.split("/")[1];
   const notAllowedPathnames = [
     "organizations",
@@ -27,11 +29,8 @@ export const Layout = () => {
   ];
 
   useEffect(() => {
-    if (isSuccess) {
-      setRoles(data.data);
-    }
     pathSecurityFunc(notAllowedPath);
-  }, [data, pathname]);
+  }, [pathname]);
 
   const pathSecurityFunc = (path) => {
     let role = "";
@@ -45,7 +44,8 @@ export const Layout = () => {
       });
     }
   };
-  
+  console.log(user)
+
   if (isLoading) return <Loader />;
   return (
     <Suspense fallback={<Loader />}>
