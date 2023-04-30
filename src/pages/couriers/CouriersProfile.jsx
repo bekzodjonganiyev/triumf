@@ -12,8 +12,8 @@ export const CouriersProfile = () => {
   const { id } = useParams();
 
   const { isLoading, error, data } = useQuery({
-    queryKey: ["organizationById"],
-    queryFn: () => apiClient.getById(`organizations/${id}/`),
+    queryKey: ["courierById"],
+    queryFn: () => apiClient.getById(`couriers/${id}/`),
     onSuccess: ({ data }) => {
       setFetchedData(data);
     },
@@ -23,21 +23,21 @@ export const CouriersProfile = () => {
     <div>
       {isModalOpen ? (
         <AddAndUpdateForm
-          hasImg={true}
-          urlById={`organizations/${id}/`}
+          urlById={`couriers/${id}/`}
           type="update"
-          component="organizations"
+          component="couriers"
           title={"Malumotlarni o'zgartirish"}
           defaultValues={fetchedData}
           handleClose={() => setIsModalOpen(false)}
-          imgKey={"icon"}
+          imgKey={"avatar"}
+          queryKey={"courierByIdModal"}
         />
       ) : null}
       <div className="flex flex-col items-center justify-center gap-5 ">
-        {fetchedData.icon ? (
+        {fetchedData.avatar ? (
           <img
-            src={fetchedData.icon}
-            alt={fetchedData.name}
+            src={fetchedData.avatar}
+            alt={fetchedData.full_name}
             className="rounded-full object-cover w-32 h-32"
           />
         ) : (
@@ -45,7 +45,7 @@ export const CouriersProfile = () => {
             <Corparation color={"#fff"} width={"50"} height={"50"} />
           </span>
         )}
-        <p className="text-xl font-bold w-56 text-center">{fetchedData.name}</p>
+        <p className="text-xl font-bold w-56 text-center">{fetchedData.full_name ?? <p className="text-red-300">Bu kuryer o'chirilgan</p>}</p>
         <button
           className="bg-primary py-2 px-6 rounded-lg flex items-center gap-2 text-white"
           onClick={() => setIsModalOpen(true)}

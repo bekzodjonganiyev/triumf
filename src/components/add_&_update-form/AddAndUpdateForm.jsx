@@ -18,9 +18,11 @@ import ImgCrop from "antd-img-crop";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import apiClient from "../../helper/apiClient";
+import { FetchingLoader } from "../loader/Loader";
 
 export const AddAndUpdateForm = ({
   imgKey,
+  queryKey,
   type,
   component,
   url,
@@ -32,7 +34,9 @@ export const AddAndUpdateForm = ({
   const [fileList, setFileList] = useState([]);
   const [orgValues, setOrgValues] = useState({});
   const [adminValues, setAdminValues] = useState({});
+  const [courierValues, setCourierValues] = useState({});
   const [status, setStatus] = useState(true);
+  const [transportType, setTransportType] = useState("piyoda");
 
   const addAndUpdateMutation = useMutation({
     mutationFn: (data) => {
@@ -55,17 +59,17 @@ export const AddAndUpdateForm = ({
     onSuccess: () => {
       setTimeout(() => handleClose(), 1000);
       window.location.reload(false);
-      window.location.pathname = "organizations";
     },
   });
 
   const getByIdQuery = useQuery({
-    queryKey: ["organizationById"],
+    queryKey: [queryKey],
     queryFn: () => (urlById ? apiClient.getById(urlById) : null),
     onSuccess: (data) => {
       if (urlById) {
         setOrgValues(data.data);
         setAdminValues(data.data);
+        setCourierValues(data.data);
       }
     },
     refetchOnWindowFocus: false,
@@ -99,19 +103,33 @@ export const AddAndUpdateForm = ({
       formData.append("is_add_admin", adminValues.is_add_admin ?? false);
       formData.append("is_active", status);
     }
+
+    // Couriers part
+    if (component === "couriers") {
+      formData.append("full_name", courierValues?.full_name);
+      formData.append("phone", courierValues?.phone);
+      formData.append("password", courierValues?.password);
+      formData.append("jshr", Number(courierValues?.jshr));
+      formData.append("language", courierValues?.language);
+      formData.append("auto_type", transportType);
+      formData.append("is_active", status);
+    }
     type !== "add" && formData.append(imgKey, fileList[0].originFileObj);
 
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
     addAndUpdateMutation.mutate(formData);
   };
 
   function handleInputValue(e) {
     const { name, value, checked } = e.target;
-    component === "organizations"
-      ? setOrgValues((prev) => ({ ...prev, [name]: value }))
-      : setAdminValues((prev) => ({
-          ...prev,
-          [name]: checked ? checked : value,
-        }));
+    setOrgValues((prev) => ({ ...prev, [name]: value }));
+    setCourierValues((prev) => ({ ...prev, [name]: value }));
+    setAdminValues((prev) => ({
+      ...prev,
+      [name]: checked ? checked : value,
+    }));
   }
 
   const onChange = ({ fileList: newFileList }) => {
@@ -133,6 +151,7 @@ export const AddAndUpdateForm = ({
     imgWindow?.document.write(image.outerHTML);
   };
 
+  console.log(getByIdQuery.data)
   return (
     <Modal
       open={true}
@@ -169,6 +188,7 @@ export const AddAndUpdateForm = ({
               value={orgValues?.inn}
               name="inn"
               required
+              disabled={type === "update" ? true : false}
             />
             <Input.Password
               placeholder="Kod"
@@ -197,52 +217,135 @@ export const AddAndUpdateForm = ({
             />
           </>
         )}
-        {component === "admins" && (
+        {component === "admins" &&
+          (getByIdQuery.isLoading ? (
+            <FetchingLoader />
+          ) : (
+            <>
+              <Input
+                placeholder="Admin nomini kiriting"
+                type="text"
+                onChange={handleInputValue}
+                value={adminValues?.full_name}
+                name="full_name"
+                required
+              />
+              <Input.Password
+                placeholder="Parol"
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
+                name="password"
+                onChange={handleInputValue}
+                value={adminValues?.password}
+                min={8}
+                required
+              />
+              <Input
+                placeholder="Telefon raqam"
+                name="phone"
+                onChange={handleInputValue}
+                value={adminValues?.phone}
+                required
+              />
+              <Checkbox
+                onChange={handleInputValue}
+                name="is_organizations"
+                defaultChecked={getByIdQuery.data.data.is_organizations}
+              >
+                Tashkilotlar
+              </Checkbox>
+              <Checkbox
+                onChange={handleInputValue}
+                name="is_courier"
+                defaultChecked={getByIdQuery.data.data.is_courier}
+              >
+                Kurierlar
+              </Checkbox>
+              <Checkbox
+                onChange={handleInputValue}
+                name="is_statistic"
+                defaultChecked={getByIdQuery.data.data.is_statistic}
+              >
+                Statistika
+              </Checkbox>
+              <Checkbox
+                onChange={handleInputValue}
+                name="is_incomes"
+                defaultChecked={getByIdQuery.data.data.is_incomes}
+              >
+                Tushumlar
+              </Checkbox>
+              <Checkbox
+                onChange={handleInputValue}
+                name="is_archive"
+                defaultChecked={getByIdQuery.data.data.is_archive}
+              >
+                Arxiv
+              </Checkbox>
+              <Checkbox
+                onChange={handleInputValue}
+                name="is_add_admin"
+                defaultChecked={getByIdQuery.data.data.is_add_admin}
+              >
+                Admin qo’shish
+              </Checkbox>
+            </>
+          ))}
+        {component === "couriers" && (
           <>
             <Input
-              placeholder="Admin nomini kiriting"
+              placeholder="Ism-familiya"
               type="text"
               onChange={handleInputValue}
-              value={adminValues?.full_name}
+              value={courierValues?.full_name}
               name="full_name"
               required
             />
+            <Input
+              placeholder="Tel raqam"
+              name="phone"
+              onChange={handleInputValue}
+              value={courierValues?.phone}
+              required
+            />
             <Input.Password
-              placeholder="Parol"
+              placeholder="Kod"
               iconRender={(visible) =>
                 visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
               }
               name="password"
               onChange={handleInputValue}
-              value={adminValues?.password}
-              min={8}
+              value={courierValues?.password}
               required
             />
             <Input
-              placeholder="Telefon raqam"
-              name="phone"
+              placeholder="JSHSHR"
+              type="number"
+              name="jshr"
               onChange={handleInputValue}
-              value={adminValues?.phone}
+              value={courierValues?.jshr}
               required
             />
-            <Checkbox onChange={handleInputValue} name="is_organizations">
-              Tashkilotlar
-            </Checkbox>
-            <Checkbox onChange={handleInputValue} name="is_courier">
-              Kurierlar
-            </Checkbox>
-            <Checkbox onChange={handleInputValue} name="is_statistic">
-              Statistika
-            </Checkbox>
-            <Checkbox onChange={handleInputValue} name="is_incomes">
-              Tushumlar
-            </Checkbox>
-            <Checkbox onChange={handleInputValue} name="is_archive">
-              Arxiv
-            </Checkbox>
-            <Checkbox onChange={handleInputValue} name="is_add_admin">
-              Admin qo’shish
-            </Checkbox>
+            <Input
+              placeholder="Til"
+              type="text"
+              name="language"
+              onChange={handleInputValue}
+              value={courierValues?.language}
+              required
+            />
+            <Segmented
+              block
+              options={[
+                { value: "piyoda", label: "Piyoda" },
+                { value: "velosiped", label: "Velosiped" },
+                { value: "mashina", label: "Mashina" },
+              ]}
+              value={transportType}
+              onChange={(e) => setTransportType(e)}
+              className="py-1 px-2 bg-[0,0,0,0.01]"
+            />
           </>
         )}
         <Segmented
@@ -288,7 +391,7 @@ export const AddAndUpdateForm = ({
         </button>
       </form>
       <Popconfirm
-        title="Bu tashkilotni o'chirishni xoxlaysizmni?"
+        title="O'chirishni xoxlaysizmi?"
         icon={
           <QuestionCircleOutlined
             style={{

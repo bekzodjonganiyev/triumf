@@ -37,7 +37,6 @@ export const Organizations = () => {
     <>
       {isModalOpen ? (
         <AddAndUpdateForm
-          hasImg={false}
           url="organizations/"
           type="add"
           component="organizations"

@@ -36,13 +36,12 @@ export const Couriers = () => {
     <div className="flex flex-wrap gap-10">
       {isModalOpen ? (
         <AddAndUpdateForm
-          hasImg={false}
-          url="organizations/"
+          url="couriers/"
           type="add"
-          component="organizations"
+          component="couriers"
           handleClose={() => setIsModalOpen(false)}
-          title="Tashkilot qo'shish"
-          imgKey={"icon"}
+          title="Kurier qo'shish"
+          imgKey={"avatar"}
         />
       ) : null}
       <FunctionalHeader
@@ -50,12 +49,12 @@ export const Couriers = () => {
         payment={"520 500 UZS"}
         hasStatistic={false}
         hasAddBtn={true}
-        text="Tashkilot qo'shish"
+        text="Kurier qo'shish"
         icon={<AddSvg />}
         handleBtn={() => setIsModalOpen(true)}
         classNames="justify-end gap-10 mb-10"
       />
-      {couriers.map((item) => (
+      {couriers?.map((item) => (
         <Card
           key={item.name}
           obj={item}

@@ -50,7 +50,6 @@ export const Admins = () => {
     <div className="flex flex-wrap gap-10">
       {modal2Open && modalConfig.type === "add" && (
         <AddAndUpdateForm
-          hasImg={false}
           url="admins/"
           type="add"
           component="admins"
@@ -61,13 +60,13 @@ export const Admins = () => {
       )}
       {modal2Open && modalConfig.type === "update" && (
         <AddAndUpdateForm
-          hasImg={true}
           urlById={`admins/${modalConfig.id}/`}
           type="update"
           component="admins"
           handleClose={() => setModal2Open(false)}
           title="Malumotlarni o'zgartirish"
           imgKey={"avatar"}
+          queryKey={"adminByIdModal"}
         />
       )}
       <FunctionalHeader

@@ -23,7 +23,6 @@ export const OrganizationsProfile = () => {
     <div>
       {isModalOpen ? (
         <AddAndUpdateForm
-          hasImg={true}
           urlById={`organizations/${id}/`}
           type="update"
           component="organizations"
@@ -31,6 +30,7 @@ export const OrganizationsProfile = () => {
           defaultValues={fetchedData}
           handleClose={() => setIsModalOpen(false)}
           imgKey={"icon"}
+          queryKey={"organizationByIdModal"}
         />
       ) : null}
       <div className="flex flex-col items-center justify-center gap-5 ">
