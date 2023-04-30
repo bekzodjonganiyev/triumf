@@ -41,3 +41,9 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
+
+.active {
+  background: rgba(255, 147, 47, 0.2);
+  color: #ff932f;
+  fill: #ff932f;
+}

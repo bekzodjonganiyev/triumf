@@ -33,7 +33,7 @@ export const FunctionalHeader = ({
           className="p-2 outline-none w-80"
           placeholder="Qidirish"
         />
-        <button className="bg-primary py-0.5 px-6 rounded-r-2xl">
+        <button className="bg-secondary py-0.5 px-6 rounded-r-2xl">
           <SearchSvg />
         </button>
       </div>

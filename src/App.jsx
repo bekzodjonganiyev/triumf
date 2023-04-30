@@ -4,7 +4,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 import { Home } from "./components/home/Home";
 import { Layout, ProtectedRoute, Loader } from "./components";
-import { LoginForm } from "./pages/login/LoginOrg"
+import { LoginForm, Lists, Statistics, Archive} from "./pages"
 
 function App() {
   const queryClient = new QueryClient();
@@ -24,9 +24,9 @@ function App() {
               </Suspense>
             }
           >
-            <Route index path="lists" element={<>Hello lists</>} />
-            <Route path="statistics" element={<>Hello statistics</>} />
-            <Route path="archives" element={<>Hello archives</>} />
+            <Route index path="lists" element={<Lists />} />
+            <Route path="statistics" element={<Statistics />} />
+            <Route path="archives" element={<Archive />} />
           </Route>
         </Routes>
       </QueryClientProvider>
