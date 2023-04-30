@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { Alert, message } from "antd";
+import { message } from "antd";
 
 import { AddSvg, Corparation } from "../../assets/icons";
 import {
@@ -16,7 +16,7 @@ export const Admins = () => {
   const [modal2Open, setModal2Open] = useState(false);
   const [modalConfig, setModalConfig] = useState("");
 
-  const { isLoading, error, data, isFetching } = useQuery({
+  const { isLoading, error, data } = useQuery({
     queryKey: ["admins"],
     queryFn: () => apiClient.getAll("admins/"),
   });
@@ -82,7 +82,7 @@ export const Admins = () => {
         }}
         classNames="justify-end gap-10 mb-10"
       />
-      {admins.map((item) => (
+      {admins?.map((item) => (
         <Card
           key={item.id}
           obj={item}

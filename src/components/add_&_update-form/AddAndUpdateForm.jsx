@@ -251,42 +251,42 @@ export const AddAndUpdateForm = ({
               <Checkbox
                 onChange={handleInputValue}
                 name="is_organizations"
-                defaultChecked={getByIdQuery.data.data.is_organizations}
+                defaultChecked={getByIdQuery?.data?.data?.is_organizations}
               >
                 Tashkilotlar
               </Checkbox>
               <Checkbox
                 onChange={handleInputValue}
                 name="is_courier"
-                defaultChecked={getByIdQuery.data.data.is_courier}
+                defaultChecked={getByIdQuery?.data?.data?.is_courier}
               >
                 Kurierlar
               </Checkbox>
               <Checkbox
                 onChange={handleInputValue}
                 name="is_statistic"
-                defaultChecked={getByIdQuery.data.data.is_statistic}
+                defaultChecked={getByIdQuery?.data?.data?.is_statistic}
               >
                 Statistika
               </Checkbox>
               <Checkbox
                 onChange={handleInputValue}
                 name="is_incomes"
-                defaultChecked={getByIdQuery.data.data.is_incomes}
+                defaultChecked={getByIdQuery?.data?.data?.is_incomes}
               >
                 Tushumlar
               </Checkbox>
               <Checkbox
                 onChange={handleInputValue}
                 name="is_archive"
-                defaultChecked={getByIdQuery.data.data.is_archive}
+                defaultChecked={getByIdQuery?.data?.data?.is_archive}
               >
                 Arxiv
               </Checkbox>
               <Checkbox
                 onChange={handleInputValue}
                 name="is_add_admin"
-                defaultChecked={getByIdQuery.data.data.is_add_admin}
+                defaultChecked={getByIdQuery?.data?.data?.is_add_admin}
               >
                 Admin qo’shish
               </Checkbox>
