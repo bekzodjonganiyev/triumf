@@ -1,7 +1,7 @@
-// import { AudioOutlined } from '@ant-design/icons';
-import { Input } from "antd";
 import { SearchSvg } from "../../../assets/icons";
-const { Search } = Input;
+
+import { useAppContext } from "../../../context/app.context";
+
 
 export const FunctionalHeader = ({
   hasStatistic,
@@ -15,6 +15,7 @@ export const FunctionalHeader = ({
   classNames,
 }) => {
   const onSearch = () => {};
+  const {searchValue, setSearchValue} = useAppContext()
   return (
     <div className={`w-full flex items-center ${classNames}`}>
       {hasStatistic ? (
@@ -32,6 +33,7 @@ export const FunctionalHeader = ({
           type="text"
           className="p-2 outline-none w-80"
           placeholder="Qidirish"
+          onChange={(e) => setSearchValue(e.target.value)}
         />
         <button className="bg-secondary py-0.5 px-6 rounded-r-2xl">
           <SearchSvg />

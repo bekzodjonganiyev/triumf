@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { Sidebar, Loader } from "..";
 import apiClient from "../../helper/apiClient";
+import AppContextProvider from "../../context/app.context";
 
 export const Layout = () => {
   const [user, setUser] = useState({});
@@ -23,7 +24,9 @@ export const Layout = () => {
         <Sidebar />
         <section className="flex flex-col flex-grow">
           <main className="px-5 flex-grow overflow-y-scroll custom-scrollbar">
-            <Outlet context={[user]} />
+            <AppContextProvider>
+              <Outlet context={[user]} />
+            </AppContextProvider>
           </main>
         </section>
       </div>

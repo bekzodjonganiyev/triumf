@@ -24,7 +24,7 @@ export const ShowCaseSvg_1 = () => (
   >
     <mask
       id="mask0_125_5144"
-      style={{maskType: "alpha"}}
+      style={{ maskType: "alpha" }}
       maskUnits="userSpaceOnUse"
       x="0"
       y="0"
@@ -690,7 +690,7 @@ export const FacebookSvg = () => (
     />
     <mask
       id="mask0_125_6008"
-      style={{maskType: "luminance"}}
+      style={{ maskType: "luminance" }}
       maskUnits="userSpaceOnUse"
       x="7"
       y="3"
@@ -724,7 +724,7 @@ export const TwitterSvg = () => (
     />
     <mask
       id="mask0_125_6009"
-      style={{maskType: "luminance"}}
+      style={{ maskType: "luminance" }}
       maskUnits="userSpaceOnUse"
       x="3"
       y="4"
@@ -758,7 +758,7 @@ export const InstagramSvg = () => (
     />
     <mask
       id="mask0_125_6010"
-      style={{maskType: "luminance"}}
+      style={{ maskType: "luminance" }}
       maskUnits="userSpaceOnUse"
       x="2"
       y="2"
@@ -854,7 +854,7 @@ export const AddAdminSvg = () => (
   </svg>
 );
 
-export const Corparation = ({color, width, height}) => (
+export const Corparation = ({ color, width, height }) => (
   <svg
     width={width ?? "24"}
     height={height ?? "24"}
@@ -1271,5 +1271,21 @@ export const DeleteSvg = () => (
         <rect width="32" height="32" fill="white" />
       </clipPath>
     </defs>
+  </svg>
+);
+
+export const OrdinarNumberSvg = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M4 13.3333L4.66667 10.6666H2L2.33333 9.33329H5L5.66667 6.66663H3L3.33333 5.33329H6L6.66667 2.66663H8L7.33333 5.33329H10L10.6667 2.66663H12L11.3333 5.33329H14L13.6667 6.66663H11L10.3333 9.33329H13L12.6667 10.6666H10L9.33333 13.3333H8L8.66667 10.6666H6L5.33333 13.3333H4ZM6.33333 9.33329H9L9.66667 6.66663H7L6.33333 9.33329Z"
+      fill="#23202A"
+      fill-opacity="0.6"
+    />
   </svg>
 );

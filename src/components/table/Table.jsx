@@ -1,57 +1,192 @@
-import { Table as AntTable } from "antd";
-
-import { EyeSvg } from "../../assets/icons";
-
-const columns = [
+import { SearchOutlined } from "@ant-design/icons";
+import { Button, Input, Space, Table as AntTable } from "antd";
+import { useRef, useState } from "react";
+import Highlighter from "react-highlight-words";
+const data = [
   {
-    title: "#",
-    dataIndex: "order",
+    key: "1",
+    name: "John Brown",
+    age: 32,
+    address: "New York No. 1 Lake Park",
   },
   {
-    title: "Manzil",
-    dataIndex: "address",
+    key: "2",
+    name: "Joe Black",
+    age: 42,
+    address: "London No. 1 Lake Park",
   },
   {
-    title: "F.I.SH",
-    dataIndex: "name",
+    key: "3",
+    name: "Jim Green",
+    age: 32,
+    address: "Sydney No. 1 Lake Park",
   },
   {
-    title: "Jo'natuvchi",
-    dataIndex: "sender",
-  },
-  {
-    title: "Status",
-    dataIndex: "status",
-  },
-  {
-    dataIndex: "icon",
-    render: (_, e) => (
-      <button
-        onClick={(a) => {
-          console.log("a", a);
-          console.log("e", e);
-        }}
-      >
-        <EyeSvg />
-      </button>
-    ),
+    key: "4",
+    name: "Jim Red",
+    age: 32,
+    address: "London No. 2 Lake Park",
   },
 ];
+export const Table = () => {
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef(null);
 
-const onChange = (pagination, filters, sorter, extra) => {
-  console.log("params", pagination, filters, sorter, extra);
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText("");
+  };
+
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
+      <div
+        style={{
+          padding: 8,
+        }}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) => {
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+            confirm()
+            setSearchText(selectedKeys[0])
+            setSearchedColumn(dataIndex)
+            // handleSearch(selectedKeys, confirm, dataIndex);
+          }}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{
+            marginBottom: 8,
+            display: "block",
+          }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({
+                closeDropdown: false,
+              });
+              setSearchText(selectedKeys[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Filter
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined
+        style={{
+          color: filtered ? "#1890ff" : undefined,
+        }}
+      />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{
+            backgroundColor: "#ffc069",
+            padding: 0,
+          }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ""}
+        />
+      ) : (
+        text
+      ),
+  });
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      width: "30%",
+      ...getColumnSearchProps("name"),
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
+      width: "20%",
+      ...getColumnSearchProps("age"),
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+      ...getColumnSearchProps("address"),
+      sorter: (a, b) => a.address.length - b.address.length,
+      sortDirections: ["descend", "ascend"],
+    },
+  ];
+  return (
+    <>
+      <Input
+          ref={searchInput}
+          placeholder={""}
+          onChange={(e) => {}}
+          onPressEnter={() => {}}
+          style={{
+            marginBottom: 8,
+            display: "block",
+          }}
+        />
+      <AntTable columns={columns} dataSource={data} />
+    </>
+  );
 };
-export const Table = ({lettersList, loading}) => (
-  <>
-    <AntTable
-      columns={columns}
-      dataSource={lettersList}
-      onChange={onChange}
-      pagination={{
-        pageSize: 10,
-        position: ["bottomCenter"],
-      }}
-      loading={loading}
-    />
-  </>
-);
