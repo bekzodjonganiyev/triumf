@@ -22,28 +22,36 @@
 
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
+  display: none;
   width: 0px;
+  height: 10px;
+  
 }
 
 *::-webkit-scrollbar-track {
-  /* background: #000 ;
-    border-radius: 0px */
+  background: rgb(235, 232, 232) ;
+  border-radius: 0px
 }
 
 *::-webkit-scrollbar-thumb {
-  /* background:  #F06D06;
-    border-radius: 10px; */
+  background: #ff932f;
+  border-radius: 10px;
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 .active {
   background: rgba(255, 147, 47, 0.2);
   color: #ff932f;
   fill: #ff932f;
+}
+
+.letter-excel {
+  overflow: scroll;
+  width: 1000px;
 }

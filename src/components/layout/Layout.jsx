@@ -9,7 +9,7 @@ import AppContextProvider from "../../context/app.context";
 export const Layout = () => {
   const [user, setUser] = useState({});
 
-  const { isLoading } = useQuery({
+  const { isLoading, isSuccess } = useQuery({
     queryKey: ["user"],
     queryFn: () => apiClient.getRoles(),
     onSuccess: (data) => {
@@ -25,7 +25,7 @@ export const Layout = () => {
         <section className="flex flex-col flex-grow">
           <main className="px-5 flex-grow overflow-y-scroll custom-scrollbar">
             <AppContextProvider>
-              <Outlet context={[user]} />
+              {isSuccess && !isLoading && <Outlet context={[user]} />}
             </AppContextProvider>
           </main>
         </section>

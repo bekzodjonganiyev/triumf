@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useOutletContext } from "react-router-dom";
 import {
@@ -6,9 +6,10 @@ import {
   Table as AntTable,
   Button,
   Form,
-  Input,
+  message,
   Select,
   Upload,
+  Input,
 } from "antd";
 import { LoadingOutlined, UploadOutlined } from "@ant-design/icons";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -71,7 +72,34 @@ export const Lists = () => {
   const [activeBtn, setActiveBtn] = useState(1);
   const [modal, setModal] = useState({ type: null, open: false });
   const [letterId, setLetterId] = useState("");
-  const [fileList, setFileList] = useState([]);
+  const [fileNames, setFileNames] = useState(
+    localStorage.getItem("fileNames") || []
+  );
+
+  const date = new Date();
+  const day = String(date.getDate()).padStart(2, 0);
+  const month = String(date.getMonth() + 1).padStart(2, 0);
+  const year = date.getFullYear();
+  const excelFileName = `${day}.${month}.${year}`;
+
+  function checkFileName(name) {
+    let result = "";
+    let temp = "";
+    for (let i = 0; i < fileNames.length; i++) {
+      if (name === fileNames[i]) {
+        localStorage.setItem("filName", name);
+        temp = name + `${i + 1}`;
+        checkFileName(temp);
+      } else {
+        result = temp;
+      }
+    }
+    return result;
+  }
+
+  useEffect(() => {
+    checkFileName(excelFileName);
+  }, []);
 
   const fetchLetterExcel = useQuery({
     queryKey: ["uploadLetterExcel"],
@@ -126,6 +154,12 @@ export const Lists = () => {
     refetchOnWindowFocus: false,
   });
 
+  const fetchSections = useQuery({
+    queryKey: ["sections"],
+    queryFn: () => apiClient.getById(`adele/?organization=${user.id}`),
+    refetchOnWindowFocus: false,
+  });
+
   const uploadLetterMuatation = useMutation({
     mutationFn: (data) =>
       apiClient.add(
@@ -136,13 +170,20 @@ export const Lists = () => {
         }`,
         data
       ),
+    onSuccess: () => {
+      message.success("File yuklandi");
+      setTimeout(() => {
+        setModal({ open: false });
+      }, 800);
+      fetchLetterExcel.refetch();
+      form.resetFields();
+    },
   });
 
   const onSubmit = (e) => {
     const fmData = new FormData();
     fmData.append("name", e.name);
     fmData.append("section", e.section);
-    console.log(e.file);
     e?.file?.fileList?.forEach((file) => {
       fmData.append(
         `${modal.type === MODAL_TYPES.ADD_PDF ? "pdf_file" : "excel_file"}`,
@@ -150,7 +191,9 @@ export const Lists = () => {
       );
     });
     fmData.append("organization", user.id);
-
+    for (var pair of fmData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
     uploadLetterMuatation.mutate(fmData);
   };
 
@@ -186,7 +229,11 @@ export const Lists = () => {
       onFinish={(e) => onSubmit(e)}
       className="m-10 mb-3 flex flex-col items-center justify-between  w-96"
     >
-      <h1 className="text-2xl mb-10">Ro’yxat yaratish</h1>
+      <h1 className="text-2xl mb-5">Ro’yxat yaratish</h1>
+      <p className="text-center text-ligth_text text-sm mb-5">
+        Ro’yxatni qo’shganingizdan keyin ro’yxatlar qatorida <br /> ko’rinishi uchun
+        belgilangan to’lovni amalga oshirishingiz <br /> kerak bo’ladi
+      </p>
       <Form.Item
         name="section"
         rules={[
@@ -204,9 +251,13 @@ export const Lists = () => {
           bordered={false}
           className="border-2 border-[rgba(0,0,0,0.15)] rounded-xl focus:shadow-md"
         >
-          <Option value="male">male male malemale</Option>
-          <Option value="female">male male malemale</Option>
-          <Option value="other">othemale male malemale</Option>
+          {fetchSections.isLoading ? (
+            <LoadingOutlined spin />
+          ) : (
+            fetchSections?.data?.data?.map((item) => (
+              <Option value={item.id}>{item.name}</Option>
+            ))
+          )}
         </Select>
       </Form.Item>
       <Form.Item
@@ -219,6 +270,7 @@ export const Lists = () => {
         className="w-full text-center"
       >
         <Input
+          type="text"
           size="large"
           placeholder="File nomi"
           className="border-2 border-[rgba(0,0,0,0.15)] rounded-xl focus:shadow-md w-96"
@@ -234,10 +286,9 @@ export const Lists = () => {
       >
         {/* <Input size="large" /> */}
         <Upload
-          beforeUpload={(file) => {
-            setFileList([...fileList, file]);
-            return false;
-          }}
+          accept={`${
+            modal.type === MODAL_TYPES.ADD_PDF ? " application/pdf" : ".xlsx"
+          }`}
         >
           <div className="flex border-2 border-[rgba(0,0,0,0.15)] py-0.5 rounded-[13px] focus:shadow-md w-96">
             <input
@@ -246,9 +297,9 @@ export const Lists = () => {
               className="p-2 outline-none w-full"
               placeholder="XML file yuklang"
             />
-            <button className="bg-secondary py-0.5 px-6 rounded-r-2xl">
+            <span className="bg-secondary py-1 px-6 rounded-r-2xl">
               <DowvloadSvg />
-            </button>
+            </span>
           </div>
         </Upload>
       </Form.Item>
@@ -351,6 +402,12 @@ export const Lists = () => {
         </span>{" "}
         №{fetchModalContent?.data?.data?.id}
       </p>
+      <p className="flex gap-2 items-center">
+        <span className="">
+          Sabab: 
+        </span>{" "}
+        {fetchModalContent?.data?.data?.reason}
+      </p>
     </div>
   );
 
@@ -364,7 +421,7 @@ export const Lists = () => {
         }
       />
 
-      <div className="flex flex-nowrap gap-3 overflow-x-scroll mb-10 w-[1200px]">
+      <div className="flex flex-nowrap gap-3 mb-10 letter-excel">
         {letterExcelResult}
       </div>
 
