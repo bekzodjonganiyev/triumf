@@ -12,7 +12,7 @@ export const Header = ({handleEvent1, handleEvent2, title}) => {
         </div>
         <div className="flex justify-between items-center w-4/12">
           <button className="bg-secondary text-white flex gap-2 py-3 px-4 rounded-xl" onClick={() => handleEvent1()}><span><UploadLetterSvg /> </span> PDF file yuklash</button>
-          <button className="bg-secondary text-white flex gap-2 py-3 px-4 rounded-xl" onClick={() => handleEvent2()}><span><UploadLetterSvg /> </span> XML file yuklash</button>
+          <button className="bg-secondary text-white flex gap-2 py-3 px-4 rounded-xl" onClick={() => handleEvent2()}><span><UploadLetterSvg /> </span> XLSX file yuklash</button>
         </div>
       </div>
       <hr className="border-1 border-slate-300 mt-6" />
