@@ -3,8 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 import { Home } from "./components/home/Home";
-import { Layout, ProtectedRoute, Loader } from "./components";
-import { LoginForm, Lists, Statistics, Archive} from "./pages"
+import { Layout, ProtectedRoute, Loader, ErrorPage } from "./components";
+import { LoginForm, Lists, Statistics, Archive } from "./pages";
 
 function App() {
   const queryClient = new QueryClient();
@@ -28,6 +28,7 @@ function App() {
             <Route path="statistics" element={<Statistics />} />
             <Route path="archives" element={<Archive />} />
           </Route>
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </QueryClientProvider>
     </>

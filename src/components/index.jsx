@@ -5,6 +5,7 @@ import { Header } from "./authenticeted/header/Header";
 import { Layout } from "./layout/Layout";
 import { ProtectedRoute } from "./protected_route/ProtectedRoute";
 import { Table } from "./table/Table";
+import { ErrorPage } from "./404/ErrorPage";
 
 export {
     Layout,
@@ -13,5 +14,6 @@ export {
     Sidebar,
     ProtectedRoute,
     Header,
-    Table
+    Table,
+    ErrorPage
 }
