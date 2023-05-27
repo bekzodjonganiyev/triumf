@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useOutletContext } from "react-router-dom";
-import {
-  Modal,
-  Table as AntTable,
-  Button,
-  Form,
-  message,
-  Upload,
-} from "antd";
+import { Modal, Table as AntTable, Button, Form, message, Upload, Select } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
@@ -70,6 +63,7 @@ export const Lists = () => {
   const [activeBtn, setActiveBtn] = useState(1);
   const [modal, setModal] = useState({ type: null, open: false });
   const [letterId, setLetterId] = useState("");
+  const [districtId, setDistrictId] = useState("");
 
   const fetchLetterExcel = useQuery({
     queryKey: ["uploadLetterExcel"],
@@ -117,6 +111,12 @@ export const Lists = () => {
     enabled: true,
   });
 
+  const fetchDistricts = useQuery({
+    queryKey: ["districts"],
+    queryFn: () => apiClient.getAll(`letters/get_districts/`),
+    refetchOnWindowFocus: false,
+  });
+
   const fetchModalContent = useQuery({
     queryKey: ["modalContent", letterId],
     queryFn: () => apiClient.getById(`letters/${letterId}`),
@@ -154,6 +154,7 @@ export const Lists = () => {
       );
     });
     fmData.append("organization", user.id);
+    fmData.append("district_id", districtId)
     for (var pair of fmData.entries()) {
       console.log(pair[0] + ", " + pair[1]);
     }
@@ -176,6 +177,24 @@ export const Lists = () => {
         Ro’yxatni qo’shganingizdan keyin ro’yxatlar qatorida <br /> ko’rinishi
         uchun belgilangan to’lovni amalga oshirishingiz <br /> kerak bo’ladi
       </p>
+      <Form.Item className="w-full">
+        <Select
+          placeholder="Bo'lim tanlash"
+          onChange={(e) => setDistrictId(e)}
+          allowClear
+          size="large"
+          bordered={false}
+          className="border-2 border-[rgba(0,0,0,0.15)] rounded-xl focus:shadow-md"
+        >
+          {fetchDistricts.isLoading ? (
+            <LoadingOutlined spin />
+          ) : (
+            fetchDistricts?.data?.data?.map((item) => (
+              <Select.Option value={item.id}>{item.name}</Select.Option>
+            ))
+          )}
+        </Select>
+      </Form.Item>
 
       <Form.Item
         name="file"
@@ -185,7 +204,6 @@ export const Lists = () => {
           },
         ]}
       >
-
         <Upload
           accept={`${
             modal.type === MODAL_TYPES.ADD_PDF ? " application/pdf" : ".xlsx"
@@ -196,7 +214,11 @@ export const Lists = () => {
               type="text"
               disabled
               className="p-2 outline-none w-full"
-              placeholder={ modal.type === MODAL_TYPES.ADD_PDF ? " PDF file yuklang" : "XLSX file yuklang"}
+              placeholder={
+                modal.type === MODAL_TYPES.ADD_PDF
+                  ? " PDF file yuklang"
+                  : "XLSX file yuklang"
+              }
             />
             <span className="bg-secondary py-1 px-6 rounded-r-2xl">
               <DowvloadSvg />
