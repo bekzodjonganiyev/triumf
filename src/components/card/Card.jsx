@@ -23,7 +23,7 @@ export const Card = ({ obj, hasEvent1, hasEvent2, handleBtn1, handleBtn2 }) => {
       {hasEvent1 ? (
         <button
           className="bg-primary text-white text-center rounded-md p-2 w-full"
-          onClick={() => handleBtn1()}
+          onClick={() => handleBtn1(obj.id)}
         >
           {obj.firstActionTitle}
         </button>

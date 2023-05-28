@@ -13,6 +13,7 @@ const MoneyCard = lazy(() => import("./money_card/MoneyCard").then(module => ({d
 const Table = lazy(() => import("./table/Table").then(module => ({default: module.Table})))
 const ProtectedRoute = lazy(() => import("./protected_route/ProtectedRoute").then(module => ({default: module.ProtectedRoute})))
 const AddAndUpdateForm = lazy(() => import("./add_&_update-form/AddAndUpdateForm").then(module => ({default: module.AddAndUpdateForm})))
+const SelectedLetterTable = lazy(() => import("./selected_letter_table/SelectedLetterTable").then(module => ({default: module.SelectedLetterTable})))
 
 export { 
     Card,
@@ -25,6 +26,7 @@ export {
     MoneyCard,
     ProtectedRoute,
     AddAndUpdateForm,
+    SelectedLetterTable,
     Loader,
     FetchingLoader,
     FunctionalHeader    

@@ -14,7 +14,7 @@ import {
   Statistics,
   LoginForm,
 } from "./pages";
-import { Layout, ProtectedRoute, Loader } from "./components";
+import { Layout, ProtectedRoute, Loader, SelectedLetterTable } from "./components";
 
 function App() {
   const queryClient = new QueryClient();
@@ -80,6 +80,7 @@ function App() {
               element={<h1 className="text-red-400">Arxiv malumotlari bor</h1>}
             />
           </Route>
+          <Route path="couriers/:id/add_letter" element={<SelectedLetterTable />}/>
           <Route path="statistics" element={<Statistics />} />
           <Route path="incomes" element={<Incomes />} />
           <Route path="archive" element={<Archives />} />
