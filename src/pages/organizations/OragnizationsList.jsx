@@ -70,7 +70,7 @@ export const OragnizationsList = () => {
       const oy = String(date.getMonth() + 1).padStart(2, 0);
       const yil = date.getFullYear();
       setDateOneLetter({
-        time: `${minut}:${soat}`,
+        time: `${soat}:${minut}`,
         date: `${kun}.${oy}.${yil}`,
       });
     },
