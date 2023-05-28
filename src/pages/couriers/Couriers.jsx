@@ -129,7 +129,7 @@ export const Couriers = () => {
         hasAddBtn={true}
         text="Kurier qo'shish"
         icon={<AddSvg />}
-        handleBtn={() => setIsModalOpen2(true)}
+        handleBtn={() => setIsModalOpen(true)}
         classNames="justify-end gap-10 mb-10"
       />
       {couriers?.map((item) => (
