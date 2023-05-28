@@ -5,13 +5,25 @@ import { Modal, Table } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import apiClient from "../../helper/apiClient";
-import { BuildingSvg, CalendarSvg, EyeSvg, LoacationSvg, OrdinarNumberSvg, TimeSvg, UserSvg } from "../../assets/icons";
+import {
+  BuildingSvg,
+  CalendarSvg,
+  EyeSvg,
+  LoacationSvg,
+  OrdinarNumberSvg,
+  TimeSvg,
+  UserSvg,
+} from "../../assets/icons";
 
 export const OragnizationsList = () => {
   const { id } = useParams();
   const [dataSource, setDataSource] = useState([]);
   const [letterId, setLetterId] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [dateOneLetter, setDateOneLetter] = useState({
+    time: null,
+    date: null,
+  });
 
   const orgLetters = useQuery({
     queryKey: ["orgLetters", id],
@@ -31,7 +43,7 @@ export const OragnizationsList = () => {
           ) : (
             <p className="text-[#ff9f31] font-bold text-md">Kutilmoqda</p>
           ),
-        icon: item.is_delivered ? null : (
+        icon: (
           <button
             onClick={() => {
               setLetterId(item.id);
@@ -50,6 +62,18 @@ export const OragnizationsList = () => {
   const fetchModalContent = useQuery({
     queryKey: ["modalContent", letterId],
     queryFn: () => apiClient.getById(`letters/${letterId}`),
+    onSuccess: (res) => {
+      const date = new Date(res.data?.created_at);
+      const minut = date.getMinutes();
+      const soat = date.getHours();
+      const kun = String(date.getDate()).padStart(2, 0);
+      const oy = String(date.getMonth() + 1).padStart(2, 0);
+      const yil = date.getFullYear();
+      setDateOneLetter({
+        time: `${minut}:${soat}`,
+        date: `${kun}.${oy}.${yil}`,
+      });
+    },
     enabled: true,
     refetchOnWindowFocus: false,
   });
@@ -102,13 +126,13 @@ export const OragnizationsList = () => {
           <span>
             <TimeSvg />
           </span>{" "}
-          Vaqt
+          {dateOneLetter.time}
         </p>
         <p className="flex gap-2 items-center">
           <span>
             <CalendarSvg />
           </span>{" "}
-          Sana
+          {dateOneLetter.date}
         </p>
       </div>
       <p className="flex gap-2 items-center">
