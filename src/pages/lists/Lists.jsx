@@ -96,11 +96,14 @@ export const Lists = () => {
         address: item.address,
         name: item.name,
         sender: item.receiver_name,
-        status: item.is_delivered ? (
-          <p className="text-[#00B800] font-semibold text-md">Topshirilgan</p>
-        ) : (
-          <p className="text-[#FF3131] font-bold text-md">Topshirilmagan</p>
-        ),
+        status:
+          item.status === "finish" ? (
+            <p className="text-[#00B800] font-semibold text-md">Topshirilgan</p>
+          ) : item.status === "cancel" ? (
+            <p className="text-[#FF3131] font-bold text-md">Topshirilmagan</p>
+          ) : (
+            <p className="text-[#ff9f31] font-bold text-md">Kutilmoqda</p>
+          ),
         icon: item.is_delivered ? null : (
           <button
             onClick={() => {
