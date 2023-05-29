@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useOutletContext } from "react-router-dom";
-import { Modal, Table as AntTable, Button, Form, message, Upload, Select } from "antd";
+import {
+  Modal,
+  Table as AntTable,
+  Button,
+  Form,
+  message,
+  Upload,
+  Select,
+} from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
@@ -59,7 +67,7 @@ export const Lists = () => {
 
   const [letterExcel, setLetterExcel] = useState([]);
   const [lettersList, setLettersList] = useState([]);
-  const [letterName, setLetterName] = useState("");
+  const [letterName, setLetterName] = useState();
   const [activeBtn, setActiveBtn] = useState(1);
   const [modal, setModal] = useState({ type: null, open: false });
   const [letterId, setLetterId] = useState("");
@@ -79,7 +87,7 @@ export const Lists = () => {
     queryKey: ["lettersList", letterName],
     queryFn: () =>
       apiClient.getAll(
-        `letters/?upload_file__name=${letterName}&organization_id=${user.id}`
+        `letters/?upload_file_name=${letterName}&organization_id=${user.id}`
       ),
     onSuccess: (res) => {
       const arr = res.data.map((item, key) => ({
@@ -154,7 +162,7 @@ export const Lists = () => {
       );
     });
     fmData.append("organization", user.id);
-    fmData.append("district_id", districtId)
+    fmData.append("district_id", districtId);
     for (var pair of fmData.entries()) {
       console.log(pair[0] + ", " + pair[1]);
     }
@@ -250,24 +258,20 @@ export const Lists = () => {
       spin
     />
   ) : (
-    <>
-      {letterExcel.map((item) => (
-        <button
-          key={item.id}
-          className={`border-2 py-2 px-6 rounded-xl ${
-            item.id === activeBtn
-              ? "active border-orange-400"
-              : "border-gray-300"
-          }`}
-          onClick={() => {
-            setLetterName(item.name);
-            setActiveBtn(item.id);
-          }}
-        >
-          {item.name}
-        </button>
-      ))}
-    </>
+    letterExcel.map((item) => (
+      <button
+        key={item.id}
+        className={`border-2 py-2 px-6 rounded-xl ${
+          item.id === activeBtn ? "active border-orange-400" : "border-gray-300"
+        }`}
+        onClick={() => {
+          setLetterName(item.name);
+          setActiveBtn(item.id);
+        }}
+      >
+        <p className="w-44">{item.name}</p>
+      </button>
+    ))
   );
 
   const modalContentResult = fetchModalContent.isLoading ? (
@@ -341,7 +345,7 @@ export const Lists = () => {
         }
       />
 
-      <div className="flex flex-nowrap gap-3 mb-10 letter-excel">
+      <div className="flex flex-row gap-3 overflow-x-scroll w-[1200px] mb-10">
         {letterExcelResult}
       </div>
 
