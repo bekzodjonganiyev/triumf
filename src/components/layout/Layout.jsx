@@ -23,7 +23,7 @@ export const Layout = () => {
       <div className="flex w-screen h-screen">
         <Sidebar />
         <section className="flex flex-col flex-grow">
-          <main className="px-5 flex-grow overflow-y-scroll custom-scrollbar">
+          <main className="px-5 flex-grow overflow-y-scroll  scrollbar-thumb-orange-400 scrollbar-track-gray-100 scrollbar-thin">
             <AppContextProvider>
               {isSuccess && !isLoading && <Outlet context={[user]} />}
             </AppContextProvider>

@@ -24,6 +24,8 @@ export default {
       'bold_text': '#23202A'
     }
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar')
+  ],
 }
 

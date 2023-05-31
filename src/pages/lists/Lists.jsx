@@ -67,7 +67,7 @@ export const Lists = () => {
 
   const [letterExcel, setLetterExcel] = useState([]);
   const [lettersList, setLettersList] = useState([]);
-  const [letterName, setLetterName] = useState();
+  const [letterName, setLetterName] = useState("");
   const [activeBtn, setActiveBtn] = useState(1);
   const [modal, setModal] = useState({ type: null, open: false });
   const [letterId, setLetterId] = useState("");
@@ -87,10 +87,11 @@ export const Lists = () => {
     queryKey: ["lettersList", letterName],
     queryFn: () =>
       apiClient.getAll(
-        `letters/?upload_file_name=${letterName}&organization_id=${user.id}`
+        `letters/?upload_file__id=${letterName}&organization_id=${user.id}`
       ),
     onSuccess: (res) => {
-      const arr = res.data.map((item, key) => ({
+      console.log(res.data);
+      const arr = res.data?.results?.map((item, key) => ({
         key: item.id,
         order: key + 1,
         address: item.address,
@@ -116,6 +117,7 @@ export const Lists = () => {
           </button>
         ),
       }));
+
       setLettersList(arr);
     },
     refetchOnWindowFocus: false,
@@ -268,7 +270,7 @@ export const Lists = () => {
           item.id === activeBtn ? "active border-orange-400" : "border-gray-300"
         }`}
         onClick={() => {
-          setLetterName(item.name);
+          setLetterName(item.id);
           setActiveBtn(item.id);
         }}
       >
@@ -348,7 +350,7 @@ export const Lists = () => {
         }
       />
 
-      <div className="flex flex-row gap-3 overflow-x-scroll w-[1200px] mb-10">
+      <div className="flex flex-row gap-3 w-[1200px] mb-10 overflow-hidden hover:overflow-x-scroll scrollbar-thin scrollbar-thumb-orange-400 scrollbar-track-gray-100">
         {letterExcelResult}
       </div>
 
