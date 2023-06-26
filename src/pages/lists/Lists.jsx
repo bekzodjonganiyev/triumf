@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useLocation } from "react-router-dom";
 import {
   Modal,
   Table as AntTable,
@@ -9,6 +9,7 @@ import {
   message,
   Upload,
   Select,
+  Pagination,
 } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -24,8 +25,10 @@ import {
   EyeSvg,
   DowvloadSvg,
 } from "../../assets/icons";
+import placeholder from "../../assets/images/placeholder.webp";
 
 import apiClient from "../../helper/apiClient";
+import { time } from "../../helper/dateFormatter";
 import { useAppContext } from "../../context/app.context";
 
 const columns = [
@@ -65,6 +68,9 @@ export const Lists = () => {
   const [form] = Form.useForm();
   const { searchValue } = useAppContext();
 
+  const a = useLocation();
+  console.log(a.pathname.split("/"));
+
   const [letterExcel, setLetterExcel] = useState([]);
   const [lettersList, setLettersList] = useState([]);
   const [letterName, setLetterName] = useState("");
@@ -72,7 +78,9 @@ export const Lists = () => {
   const [modal, setModal] = useState({ type: null, open: false });
   const [letterId, setLetterId] = useState("");
   const [districtId, setDistrictId] = useState("");
+  const [page, setPage] = useState(1);
 
+  // begin::Fetch with useQuery
   const fetchLetterExcel = useQuery({
     queryKey: ["uploadLetterExcel"],
     queryFn: () =>
@@ -87,7 +95,7 @@ export const Lists = () => {
     queryKey: ["lettersList", letterName],
     queryFn: () =>
       apiClient.getAll(
-        `letters/?upload_file__id=${letterName}&organization_id=${user.id}`
+        `letters/?upload_file__id=${letterName}&organization_id=${user.id}&page=${page}`
       ),
     onSuccess: (res) => {
       console.log(res.data);
@@ -157,7 +165,9 @@ export const Lists = () => {
       form.resetFields();
     },
   });
+  // end::Fetch with useQuery
 
+  // begin::Necessary functions
   const onSubmit = (e) => {
     const fmData = new FormData();
     e?.file?.fileList?.forEach((file) => {
@@ -178,6 +188,10 @@ export const Lists = () => {
     console.log("params", pagination, filters, sorter, extra);
   };
 
+  const onChangePage = () => {};
+  // end::Necessary functions
+
+  // begin::UI components
   const uploadLefferForm = (
     <Form
       form={form}
@@ -218,6 +232,7 @@ export const Lists = () => {
         ]}
       >
         <Upload
+          maxCount={1}
           accept={`${
             modal.type === MODAL_TYPES.ADD_PDF ? " application/pdf" : ".xlsx"
           }`}
@@ -288,26 +303,32 @@ export const Lists = () => {
       spin
     />
   ) : (
-    <div className="px-10">
-      <h2 className="text-2xl text-red-600 text-center my-5">Topshirilmagan</h2>
-      <LazyLoadImage
-        alt={fetchModalContent?.data?.data?.name}
-        effect="black-and-white"
-        src={fetchModalContent?.data?.data?.image}
-        className="rounded-lg"
-      />
+    <div className="p-10">
+      <a
+        href={fetchModalContent?.data?.data?.image ?? placeholder}
+        target="_blank"
+      >
+        <LazyLoadImage
+          alt={fetchModalContent?.data?.data?.name}
+          effect="black-and-white"
+          src={fetchModalContent?.data?.data?.image ?? placeholder}
+          className={`rounded-lg ${
+            fetchModalContent?.data?.data?.image ? "" : "ml-16"
+          }`}
+        />
+      </a>
       <div className="flex justify-between mb-5">
         <p className="flex gap-2 items-center">
           <span>
             <TimeSvg />
           </span>{" "}
-          Vaqt
+          {time(fetchModalContent?.data?.data?.created_at).hour}
         </p>
         <p className="flex gap-2 items-center">
           <span>
             <CalendarSvg />
-          </span>{" "}
-          Sana
+          </span>
+          {time(fetchModalContent?.data?.data?.created_at).date}
         </p>
       </div>
       <p className="flex gap-2 items-center">
@@ -339,6 +360,7 @@ export const Lists = () => {
       </p>
     </div>
   );
+  // end::UI components
 
   return (
     <div>
@@ -374,7 +396,6 @@ export const Lists = () => {
             ? modalContentResult
             : uploadLefferForm}
         </Modal>
-
         {/* TODO FOR SEARCH FILTER IMPLEMENT */}
         {/* <Table /> */}
         <AntTable
@@ -382,7 +403,7 @@ export const Lists = () => {
           dataSource={lettersList}
           onChange={onChange}
           pagination={{
-            pageSize: 10,
+            pageSize: 50,
             position: ["bottomCenter"],
           }}
           loading={
@@ -391,6 +412,13 @@ export const Lists = () => {
             fetchLettersList.isFetching
           }
         />
+        <Pagination
+          defaultCurrent={1}
+          current={page}
+          total={fetchLettersList.data.data.count}
+          onChange={(value) => setPage(value)}
+        />
+        ;
       </>
     </div>
   );
