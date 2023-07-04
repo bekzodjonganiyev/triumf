@@ -69,7 +69,6 @@ export const Lists = () => {
   const { searchValue } = useAppContext();
 
   const a = useLocation();
-  console.log(a.pathname.split("/"));
 
   const [letterExcel, setLetterExcel] = useState([]);
   const [lettersList, setLettersList] = useState([]);
@@ -92,7 +91,7 @@ export const Lists = () => {
   });
 
   const fetchLettersList = useQuery({
-    queryKey: ["lettersList", letterName],
+    queryKey: ["lettersList", letterName, page],
     queryFn: () =>
       apiClient.getAll(
         `letters/?upload_file__id=${letterName}&organization_id=${user.id}&page=${page}`
@@ -347,7 +346,7 @@ export const Lists = () => {
         <span className="-ml-0">
           <BuildingSvg />
         </span>{" "}
-        {fetchModalContent?.data?.data?.receiver_name}
+        {fetchModalContent?.data?.data?.organization}
       </p>
       <p className="flex gap-2 items-center">
         <span className="-ml-0.5">
@@ -363,7 +362,7 @@ export const Lists = () => {
   // end::UI components
 
   return (
-    <div>
+    <div className="pb-10">
       <Header
         title={"Ro'yxatlar"}
         handleEvent1={() => setModal({ open: true, type: MODAL_TYPES.ADD_PDF })}
@@ -402,23 +401,33 @@ export const Lists = () => {
           columns={columns}
           dataSource={lettersList}
           onChange={onChange}
-          pagination={{
-            pageSize: 50,
-            position: ["bottomCenter"],
-          }}
+          pagination={false}
           loading={
             fetchLettersList.isRefetching ||
             fetchLettersList.isLoading ||
             fetchLettersList.isFetching
           }
+          className="mb-10"
         />
-        <Pagination
-          defaultCurrent={1}
-          current={page}
-          total={fetchLettersList.data.data.count}
-          onChange={(value) => setPage(value)}
-        />
-        ;
+        {letterName ? (
+          fetchLettersList.isLoading ? (
+            <LoadingOutlined
+              style={{
+                fontSize: 30,
+                color: "#FF932F",
+              }}
+              spin
+            />
+          ) : (
+            <Pagination
+              defaultCurrent={1}
+              current={page}
+              pageSize={50}
+              total={Number(fetchLettersList?.data?.data?.count)}
+              onChange={(value) => setPage(value)}
+            />
+          )
+        ) : null}
       </>
     </div>
   );
