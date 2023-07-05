@@ -1,0 +1,14 @@
+import React from 'react'
+import { MoneyCard } from '../../components'
+
+export const Incomes = () => {
+  return (
+    <div>
+      {
+        [1,2,3,4].map(item => (
+          <MoneyCard key={item} count={1000000} isPaid={true} hasStatus={true}/>
+        ))
+      }
+    </div>
+  )
+}
