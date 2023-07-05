@@ -284,6 +284,7 @@ export const Lists = () => {
           item.id === activeBtn ? "active border-orange-400" : "border-gray-300"
         }`}
         onClick={() => {
+          setPage(1)
           setLetterName(item.id);
           setActiveBtn(item.id);
         }}
