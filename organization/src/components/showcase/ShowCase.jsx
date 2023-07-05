@@ -1,6 +1,7 @@
 import React from "react";
 
 import { ShowCaseSvg_1, ShowCaseSvg_2 } from "../../assets/icons";
+import img1 from "../../assets/images/ok.jpg"
 
 export const ShowCase = () => {
   return (
@@ -19,7 +20,7 @@ export const ShowCase = () => {
             <ShowCaseSvg_1 />
           </span>
           <img
-            src="https://images.unsplash.com/photo-1676807882709-9337b0fb6e84?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
+            src={img1}
             alt="Video in header"
             className="h-[500px] w-[900px] rounded-3xl"
           />

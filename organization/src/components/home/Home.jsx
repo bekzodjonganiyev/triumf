@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Header } from "../header/Header";
+import { Footer } from "../footer/Footer";
 import { ShowCase } from "../showcase/ShowCase";
 import { Statistics } from "../rectangles_bg/RectanglesBg";
 import { TrustedOrganization } from "../trusted_organizations/TrustedOrganization";
@@ -19,7 +20,8 @@ import {
   StatisticsSvg,
   TwitterSvg,
 } from "../../assets/icons";
-import { Footer } from "../footer/Footer";
+import img2 from "../../assets/images/triumf.mp4";
+import img3 from "../../assets/images/ok.avif";
 
 export const Home = () => {
   const numbers = [
@@ -60,24 +62,26 @@ export const Home = () => {
     {
       icon: <Email />,
       title: "Email",
-      info: "contact@flex.co",
+      info: "triumf.express@gmail.com",
     },
     {
       icon: <Phone />,
       title: "Telefon",
-      info: "+7-843-672-431",
+      info: "+998 (99) 393-44-66, (99) 363-44-66",
     },
     {
       icon: <Office />,
       title: "Office",
-      info: "Toshkent sh. Yunusobod t. 20-kvartal, 707-uy",
+      info: "Toshkent sh. Yunusobod t. Shaxriston 2",
     },
     {
       icon: <SocialMedias />,
       title: "Ijtimoiy tarmoqlarda",
       info: [
         <FacebookSvg />,
-        <TwitterSvg />,
+        <a href="https://twitter.com/triumf_express/" target="_blank">
+          <TwitterSvg />
+        </a>,
         <InstagramSvg />,
         <LinkedInSvg />,
       ],
@@ -112,11 +116,7 @@ export const Home = () => {
               ))}
             </div>
             <div className="w-1/2">
-              <img
-                src="https://plus.unsplash.com/premium_photo-1670002382357-437bd0d42dec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                alt="Numbers of activity"
-                className="w-full"
-              />
+              <video className="rounded-md" autoPlay src={img2} />
             </div>
           </div>
         </div>
@@ -142,7 +142,8 @@ export const Home = () => {
                 <ShowCaseSvg_1 />
               </span>
               <img
-                src="https://images.unsplash.com/photo-1681138234408-8043904669a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzNnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+                // src="https://images.unsplash.com/photo-1681138234408-8043904669a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzNnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+                src={img3}
                 alt="Numbers of activity"
                 className="w-full"
               />
@@ -180,7 +181,9 @@ export const Home = () => {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-ligth_text text-lg">{item.info}</p>
+                    <p className="text-ligth_text text-lg text-left">
+                      {item.info}
+                    </p>
                   )}
                 </div>
               ))}
@@ -188,13 +191,27 @@ export const Home = () => {
             <form className="w-1/2 p-10 bg-graycolor1 flex flex-col gap-10 drop-shadow-md rounded-md">
               <div className="flex flex-col">
                 <label htmlFor="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="pat@shuffle.dev" className="outline-slate-300 py-3 px-4 rounded-md border border-slate-300"/>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="pat@shuffle.dev"
+                  className="outline-slate-300 py-3 px-4 rounded-md border border-slate-300"
+                />
               </div>
               <div className="flex flex-col">
                 <label htmlFor="note">Xabar</label>
-                <textarea type="note" name="note" id="note" placeholder="Matn kiriting" className="outline-slate-300 py-3 px-4 rounded-md border border-slate-300"/>
+                <textarea
+                  type="note"
+                  name="note"
+                  id="note"
+                  placeholder="Matn kiriting"
+                  className="outline-slate-300 py-3 px-4 rounded-md border border-slate-300"
+                />
               </div>
-              <button className="text-white bg-secondary p-4 rounded-md">Jo'natish</button>
+              <button className="text-white bg-secondary p-4 rounded-md">
+                Jo'natish
+              </button>
             </form>
           </div>
         </div>
