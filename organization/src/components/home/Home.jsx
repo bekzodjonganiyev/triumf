@@ -20,7 +20,7 @@ import {
   StatisticsSvg,
   TwitterSvg,
 } from "../../assets/icons";
-import img2 from "../../assets/images/triumf.mp4";
+import video from "../../assets/images/triumf.mp4";
 import img3 from "../../assets/images/ok.avif";
 
 export const Home = () => {
@@ -116,7 +116,7 @@ export const Home = () => {
               ))}
             </div>
             <div className="w-1/2">
-              <video className="rounded-md" autoPlay src={img2} />
+              <video className="rounded-md" loop autoPlay src={video} />
             </div>
           </div>
         </div>
@@ -142,7 +142,6 @@ export const Home = () => {
                 <ShowCaseSvg_1 />
               </span>
               <img
-                // src="https://images.unsplash.com/photo-1681138234408-8043904669a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzNnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
                 src={img3}
                 alt="Numbers of activity"
                 className="w-full"

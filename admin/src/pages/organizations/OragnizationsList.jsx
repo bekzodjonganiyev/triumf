@@ -29,7 +29,7 @@ export const OragnizationsList = () => {
     queryKey: ["orgLetters", id],
     queryFn: () => apiClient.getAll(`letters?organization_id=${id}`),
     onSuccess: (res) => {
-      const arr = res.data.map((item, key) => ({
+      const arr = res.data.results.map((item, key) => ({
         key: item.id,
         order: key + 1,
         address: item.address,
