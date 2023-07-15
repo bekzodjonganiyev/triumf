@@ -39,7 +39,7 @@ export const Couriers = () => {
     queryKey: ["letters", districtId],
     queryFn: () => apiClient.getAll(`letters/?district_id=${districtId}`),
     onSuccess: (res) => {
-      const arr = res.data.map((item, key) => ({
+      const arr = res.data.results.map((item, key) => ({
         key: item.id,
         order: key + 1,
         address: item.address,
