@@ -9,12 +9,12 @@ export const Footer = () => {
                 <img src={logo} alt="Triumf logo" />
             </div>
             <ul className="flex gap-20 text-white mx-auto">
-                <li><a href="#bizhaqimizda" className="">Biz xaqimizda</a></li>
-                <li><a href="#imkoniyatlar" className="">Imkoniyatlar</a></li>
-                <li><a href="#bizbilanaloqa" className="">Biz bilan aloqa</a></li>
+                <li><a href="#bizhaqimizda" className="">Биз хақимизда</a></li>
+                <li><a href="#imkoniyatlar" className="">Имкониятлар</a></li>
+                <li><a href="#bizbilanaloqa" className="">Биз билан алоқа</a></li>
             </ul>
             <div className="text-[#8896AB]">
-                © 2021 TRIUMF. All rights reserved.
+                © 2021 TRIUMF. All rights reserved. Powered by <a href="https://ictacademy.uz/">ICT Jobs</a>
             </div>
         </div>
       </div>

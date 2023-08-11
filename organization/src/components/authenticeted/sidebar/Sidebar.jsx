@@ -9,24 +9,29 @@ import {
 } from "../../../assets/icons";
 
 import logo from "../../../assets/images/triumf.png";
+import { useTranslation } from "react-i18next";
+
 
 export const Sidebar = () => {
   const svgRef = useRef(null);
+  const {t} = useTranslation();
+
 
   const orgItems = [
     {
       icon: <ListSvg />,
-      name: "Ro'yxatlar",
+      name: t("Lists"),
       url: `lists`,
     },
+    // t("Lists")
     {
       icon: <StatisticsAuthSvg />,
-      name: "Statistika",
+      name: "Статистика",
       url: `statistics`,
     },
     {
       icon: <ArchiveSvg />,
-      name: "Arxiv",
+      name: "Aрхив",
       url: `archives`,
     },
   ];
@@ -52,7 +57,7 @@ export const Sidebar = () => {
           window.location.href = "/";
         }}
       >
-        <LogOutSvg /> Chiqish
+        <LogOutSvg /> {t("Exit")}
       </button>
     </aside>
   );

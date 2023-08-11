@@ -34,14 +34,14 @@ export const LoginForm = () => {
         </div>
         <div className="py-10 px-5 bg-white shadow-2xl rounded-xl">
           <img src={truimfLogo} alt="Truimf logo" className="mx-auto mb-10" />
-          <h1 className="font-bold text-2xl text-center mb-5">Kirish</h1>
+          <h1 className="font-bold text-2xl text-center mb-5">Кириш</h1>
           <form className="flex flex-col gap-5 w-96" onSubmit={handleSubmit}>
             <input
               required
               type="text"
               name="tel"
               id="tel"
-              placeholder="Telefon raqam"
+              placeholder="Телефон рақам"
               className="outline-slate-300 py-3 px-4 rounded-md border border-slate-300"
             />
             <input
@@ -49,7 +49,7 @@ export const LoginForm = () => {
               type="password"
               name="password"
               id="password"
-              placeholder="Parol"
+              placeholder="Парол"
               className="outline-slate-300 py-3 px-4 rounded-md border border-slate-300"
             />
             <p
@@ -57,7 +57,7 @@ export const LoginForm = () => {
                 isError ? "text-red-600" : "text-green-600"
               } `}
             >
-              {isError ? error?.message : isSuccess ? "Muvaffaqiyatli" : ""}
+              {isError ? error?.message : isSuccess ? "Муваффақиятли" : ""}
             </p>
             <button
               disabled={isLoading}
@@ -77,7 +77,7 @@ export const LoginForm = () => {
                   }
                 />
               ) : (
-                "Davom etish"
+                "Давом етиш"
               )}
             </button>
           </form>

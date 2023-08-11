@@ -1,14 +1,16 @@
 import { message } from "antd";
 import React from "react";
 import { Header } from "../../components";
+import { useTranslation } from "react-i18next";
 
 export const Statistics = () => {
+  const {t} = useTranslation();
   return (
     <div>
       <Header
-        title={"Statistika"}
-        handleEvent1={() => message.warning(`Ro'yxatlar bo'limiga o'ting`)}
-        handleEvent2={() => message.warning(`Ro'yxatlar bo'limiga o'ting`)}
+        title={"Статистика"}
+        handleEvent1={() => message.warning(t(SignListPart))}
+        handleEvent2={() => message.warning(t(SignListPart))}
       />
     </div>
   );

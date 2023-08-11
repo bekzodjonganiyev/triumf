@@ -22,61 +22,64 @@ import {
 } from "../../assets/icons";
 import video from "../../assets/images/triumf.mp4";
 import img3 from "../../assets/images/ok.avif";
+import { useTranslation } from "react-i18next";
 
 export const Home = () => {
+  const {t} = useTranslation();
+
   const numbers = [
     {
       number: "235.000",
-      title: "Yetkazib berilgan xatlar",
-      desc: "Hamkorlarimiz bizga ishonib topshirgan xatlarini o’z vaqtida manzillariga yetkazganmiz",
+      title: t("Section1_title1"),
+      desc: t("Section2_text1"),
     },
     {
       number: "200",
-      title: "Hudud bo’ylab",
-      desc: "Biz Toshkent shaxri va Toshkent viloyatining har bir mahallasiga kirib boramiz",
+      title: t("Section1_title2"),
+      desc: t("Section2_text2"),
     },
     {
       number: "+100",
-      title: "Kurierlar",
-      desc: "Bizning kurierlarimiz tez va ishonchli faoliyat olib borishadi ",
+      title: t("Section1_title3"),
+      desc: t("Section2_text3"),
     },
   ];
   const comforts = [
     {
       icon: <MessageSvg />,
-      title: "Real vaqtda kuzatish",
-      desc: "Har bir xatingiz xolatini real vaqtda kuzatib turish imkoniyati mavjud.",
+      title: t("Real_time"),
+      desc: t("Real_time_text"),
     },
     {
       icon: <StatisticsSvg />,
-      title: "Oylik, yillik statistikalar",
-      desc: "Biz bilan amalga oshirayotgan xamkorligingizning potensialini shaffof xolatda kuzatib turishingiz uchun statistika va xisobotlarni ko’rib turish imkoniyati",
+      title: t("Diagram"),
+      desc: t("Diagram_text"),
     },
     {
       icon: <RemoteWorkingSvg />,
-      title: "Masofaviy ishlash",
-      desc: "Yetkazmalaringizni bizga taqdim qilish uchun ofisingizda chiqishingiz shart emas. Shunchaki hammasini web ilovamiz orqali bizga uzating!",
+      title: t("Remote"),
+      desc: t("Remote_text"),
     },
   ];
   const contacts = [
     {
       icon: <Email />,
-      title: "Email",
+      title: "Эмаил ",
       info: "triumf.express@gmail.com",
     },
     {
       icon: <Phone />,
-      title: "Telefon",
+      title: "Телефон",
       info: "+998 (99) 393-44-66, (99) 363-44-66",
     },
     {
       icon: <Office />,
-      title: "Office",
-      info: "Toshkent sh. Yunusobod t. Shaxriston 2",
+      title: "Оффиcе",
+      info: "Тошкент ш. Юнусобод т. Шахристон 2",
     },
     {
       icon: <SocialMedias />,
-      title: "Ijtimoiy tarmoqlarda",
+      title: t("Social_networking"),
       info: [
         <FacebookSvg />,
         <a href="https://twitter.com/triumf_express/" target="_blank">
@@ -92,13 +95,13 @@ export const Home = () => {
       <Header />
       <ShowCase />
       <TrustedOrganization />
-      <Statistics badge={"Raqamlar"}>
+      <Statistics badge={t("Number")}>
         <div className="mt-8">
           <h1 className="text-5xl font-extrabold">
-            Faoliyatimiz xaqida raqamlar gapirganda
+            {t("Section_title1")}
           </h1>
           <p className="text-ligth_text mt-4 text-xl">
-            2 yillik faoliyat va ushbu natijalar. Adolatli baholash sizdan!
+            {t("Section_title2")}
           </p>
 
           <div className="flex justify-between mt-20">
@@ -153,14 +156,13 @@ export const Home = () => {
           </div>
         </div>
       </Statistics>
-      <Statistics badge={"Biz bilan aloqa"}>
+      <Statistics badge={t("Contact_title")}>
         <div className="mt-8">
           <h1 className="text-5xl font-extrabold">
-            Biz bilan aloqaga chiqing!
+            {t("Contact_main_title")}
           </h1>
           <p className="text-ligth_text mt-4 text-xl">
-            Biz sizni qiziqtirgan har qanday savollarga javob beramiz yoki{" "}
-            <br /> takliflaringizni qabul qilamiz.
+          {t("Contact_main_text")}
           </p>
 
           <div className="flex items-center justify-between mt-20">
@@ -189,27 +191,27 @@ export const Home = () => {
             </div>
             <form className="w-1/2 p-10 bg-graycolor1 flex flex-col gap-10 drop-shadow-md rounded-md">
               <div className="flex flex-col">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Эмаил</label>
                 <input
                   type="email"
                   name="email"
                   id="email"
-                  placeholder="pat@shuffle.dev"
+                  placeholder="triumf.express@gmail.com"
                   className="outline-slate-300 py-3 px-4 rounded-md border border-slate-300"
                 />
               </div>
               <div className="flex flex-col">
-                <label htmlFor="note">Xabar</label>
+                <label htmlFor="note">Хабар</label>
                 <textarea
                   type="note"
                   name="note"
                   id="note"
-                  placeholder="Matn kiriting"
+                  placeholder="Матн киритинг"
                   className="outline-slate-300 py-3 px-4 rounded-md border border-slate-300"
                 />
               </div>
               <button className="text-white bg-secondary p-4 rounded-md">
-                Jo'natish
+                Жўнатиш
               </button>
             </form>
           </div>

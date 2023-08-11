@@ -5,7 +5,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { Home } from "./components/home/Home";
 import { Layout, ProtectedRoute, Loader, ErrorPage } from "./components";
 import { LoginForm, Lists, Statistics, Archive } from "./pages";
-
+import './i18n'
 function App() {
   const queryClient = new QueryClient();
   return (

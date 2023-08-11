@@ -30,6 +30,8 @@ import placeholder from "../../assets/images/placeholder.webp";
 import apiClient from "../../helper/apiClient";
 import { time } from "../../helper/dateFormatter";
 import { useAppContext } from "../../context/app.context";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 const columns = [
   {
@@ -37,19 +39,19 @@ const columns = [
     dataIndex: "order",
   },
   {
-    title: "Manzil",
+    title: t("Address"),
     dataIndex: "address",
   },
   {
-    title: "F.I.SH",
+    title: "Ф.И.О",
     dataIndex: "name",
   },
   {
-    title: "Jo'natuvchi",
+    title: t("Resiver"),
     dataIndex: "sender",
   },
   {
-    title: "Status",
+    title: "Статус",
     dataIndex: "status",
   },
   {
@@ -67,7 +69,7 @@ export const Lists = () => {
   const [user] = useOutletContext();
   const [form] = Form.useForm();
   const { searchValue } = useAppContext();
-
+  const {t} = useTranslation();
   const a = useLocation();
 
   const [letterExcel, setLetterExcel] = useState([]);
@@ -106,11 +108,11 @@ export const Lists = () => {
         sender: item.receiver_name,
         status:
           item.status === "finish" ? (
-            <p className="text-[#00B800] font-semibold text-md">Topshirilgan</p>
+            <p className="text-[#00B800] font-semibold text-md">{t("Finish")}</p>
           ) : item.status === "cancel" ? (
-            <p className="text-[#FF3131] font-bold text-md">Topshirilmagan</p>
+            <p className="text-[#FF3131] font-bold text-md">{t("Cencel")}</p>
           ) : (
-            <p className="text-[#ff9f31] font-bold text-md">Kutilmoqda</p>
+            <p className="text-[#ff9f31] font-bold text-md">{t("Process")}</p>
           ),
         icon: item.is_delivered ? null : (
           <button
@@ -155,8 +157,7 @@ export const Lists = () => {
         data
       ),
     onSuccess: () => {
-      message.success(`Xatlaringiz qayta ishlanmoqda, \n
-      ular tayyor bo'lganda jadvalda aks etadi`);
+      message.success(t(UploadFileMessage));
       setTimeout(() => {
         setModal({ open: false });
       }, 1000);
@@ -198,14 +199,13 @@ export const Lists = () => {
       onFinish={(e) => onSubmit(e)}
       className="m-10 mb-3 flex flex-col items-center justify-between  w-96"
     >
-      <h1 className="text-2xl mb-5">Ro’yxat yaratish</h1>
+      <h1 className="text-2xl mb-5">{t("CreateList")}</h1>
       <p className="text-center text-ligth_text text-sm mb-5">
-        Ro’yxatni qo’shganingizdan keyin ro’yxatlar qatorida <br /> ko’rinishi
-        uchun belgilangan to’lovni amalga oshirishingiz <br /> kerak bo’ladi
+        {t("ListText")}
       </p>
       <Form.Item className="w-full">
         <Select
-          placeholder="Bo'lim tanlash"
+          placeholder={t("SelectPart")}
           onChange={(e) => setDistrictId(e)}
           allowClear
           size="large"
@@ -243,8 +243,8 @@ export const Lists = () => {
               className="p-2 outline-none w-full"
               placeholder={
                 modal.type === MODAL_TYPES.ADD_PDF
-                  ? " PDF file yuklang"
-                  : "XLSX file yuklang"
+                  ? t("UploadFilePDF")
+                  : t("UploadFileXLSX")
               }
             />
             <span className="bg-secondary py-1 px-6 rounded-r-2xl">
@@ -262,7 +262,7 @@ export const Lists = () => {
           loading={uploadLetterMuatation.isLoading}
           size="large"
         >
-          Saqlash
+          {t("SaveButton")}
         </Button>
       </Form.Item>
     </Form>
@@ -356,7 +356,7 @@ export const Lists = () => {
         №{fetchModalContent?.data?.data?.id}
       </p>
       <p className="flex gap-2 items-center">
-        <span className="">Sabab:</span> {fetchModalContent?.data?.data?.reason}
+        <span className="">{t("Reason")}:</span> {fetchModalContent?.data?.data?.reason}
       </p>
     </div>
   );
@@ -365,7 +365,7 @@ export const Lists = () => {
   return (
     <div className="pb-10">
       <Header
-        title={"Ro'yxatlar"}
+        title={t("Lists")}
         handleEvent1={() => setModal({ open: true, type: MODAL_TYPES.ADD_PDF })}
         handleEvent2={() =>
           setModal({ open: true, type: MODAL_TYPES.ADD_XLSX })

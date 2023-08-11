@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { SearchSvg } from "../../../assets/icons";
 
 import { useAppContext } from "../../../context/app.context";
@@ -21,10 +22,10 @@ export const FunctionalHeader = ({
       {hasStatistic ? (
         <div>
           <p>
-            Jami: <b>{count}</b>
+            {t("Total")}: <b>{count}</b>
           </p>
           <p>
-            To'lov: <b>{payment}</b>
+            {t("Price")}: <b>{payment}</b>
           </p>
         </div>
       ) : null}
@@ -32,7 +33,7 @@ export const FunctionalHeader = ({
         <input
           type="text"
           className="p-2 outline-none w-80"
-          placeholder="Qidirish"
+          placeholder={t("Search")}
           onChange={(e) => setSearchValue(e.target.value)}
         />
         <button className="bg-secondary py-0.5 px-6 rounded-r-2xl">
