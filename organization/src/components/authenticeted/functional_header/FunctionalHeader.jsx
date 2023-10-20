@@ -21,16 +21,18 @@ export const FunctionalHeader = ({
   const {searchValue, setSearchValue} = useAppContext()
   const [UploadFile, setUploadFile] = useState(null)
 
-    let letterid = localStorage.getItem('LetterID')
-
-    const { isLoading, error, data } = useQuery({
-     queryKey: ["upload"],
-     queryFn: () => apiClient.getAll("upload-letter-excel/"+letterid+"/"),
-     onSuccess: ({ data }) => {
-      console.log(data);
-      setUploadFile(data.response);
-    },
-   });
+  
+  let letterid = localStorage.getItem('LetterID')
+  
+  // const { isLoading, error, data } = useQuery({
+  //    queryKey: ["upload"],
+  //    queryFn: () => apiClient.getAll("upload-letter-excel/"+letterid+"/"),
+  //    onSuccess: ({ data }) => {
+  //     console.log(data);
+  //     setUploadFile(data.response);
+      
+  //   },
+  //  });
   
 
 
@@ -47,8 +49,8 @@ export const FunctionalHeader = ({
         </div>
       ) : null}
       <div className="flex">
-        <a href={`${UploadFile}`}>
-      <button className="bg-secondary text-white flex gap-2 py-3 mx-2 px-4 rounded-xl" ><span><UploadLetterSvg /> </span> Excel hisobot</button>
+        <a href={`https://api.triumf-express.uz/api/v1/dashboard/upload-letter-excel/${letterid}/generate_excel/`}>
+         <button className="bg-secondary text-white flex gap-2 py-3 mx-2 px-4 rounded-xl" ><span><UploadLetterSvg /> </span> Excel hisobot</button>
         </a>
       <div className="flex border-2 border-[rgba(0,0,0,0.15)] p-1 rounded-xl focus:shadow-md">
         <input
