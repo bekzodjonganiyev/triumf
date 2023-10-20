@@ -85,6 +85,7 @@ export const Lists = () => {
     queryFn: () =>
       apiClient.getAll(`upload-letter-excel/?organization=${user.id}`),
     onSuccess: (data) => {
+      localStorage.setItem("LetterID", data.data[0].id)
       setLetterExcel(data.data);
     },
     refetchOnWindowFocus: false,
@@ -286,6 +287,7 @@ export const Lists = () => {
         onClick={() => {
           setPage(1)
           setLetterName(item.id);
+          localStorage.setItem("LetterID", item.id)
           setActiveBtn(item.id);
         }}
       >
