@@ -10,7 +10,8 @@ export const Header = ({handleEvent1, handleEvent2, title}) => {
             <NotificationSvg />
           </span>
         </div>
-        <div className="flex justify-end items-cente w-2/12">
+        <div className="flex justify-end items-cente w-2/6">
+          <button className="bg-secondary text-white flex gap-2 py-3 mx-2 px-4 rounded-xl"onClick={() => handleEvent1()} ><span><UploadLetterSvg /> </span> ZIP file yuklash</button>
           <button className="bg-secondary text-white flex gap-2 py-3 px-4 rounded-xl" onClick={() => handleEvent2()}><span><UploadLetterSvg /> </span> XLSX file yuklash</button>
           {/* <button className="bg-secondary text-white flex gap-2 py-3 px-4 rounded-xl" onClick={() => handleEvent1()}><span><UploadLetterSvg /> </span> PDF file yuklash</button> */}
         </div>

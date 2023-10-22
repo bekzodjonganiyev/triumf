@@ -75,6 +75,7 @@ export const Lists = () => {
   const [letterName, setLetterName] = useState("");
   const [activeBtn, setActiveBtn] = useState(1);
   const [modal, setModal] = useState({ type: null, open: false });
+  const [modal2, setModal2] = useState({ type: null, open: false });
   const [letterId, setLetterId] = useState("");
   const [districtId, setDistrictId] = useState("");
   const [page, setPage] = useState(1);
@@ -85,6 +86,7 @@ export const Lists = () => {
     queryFn: () =>
       apiClient.getAll(`upload-letter-excel/?organization=${user.id}`),
     onSuccess: (data) => {
+      localStorage.setItem("LetterID", data.data[0].id)
       setLetterExcel(data.data);
     },
     refetchOnWindowFocus: false,
@@ -182,6 +184,21 @@ export const Lists = () => {
     }
     uploadLetterMuatation.mutate(fmData);
   };
+  const onSubmit2 = (e) => {
+    const fmData = new FormData();
+    e?.file?.fileList?.forEach((file) => {
+      fmData.append(
+        `${modal2.type === MODAL_TYPES.ADD_PDF ? "pdf_file" : "excel_file"}`,
+        file?.originFileObj
+      );
+    });
+    fmData.append("organization", user.id);
+    fmData.append("district_id", districtId);
+    for (var pair of fmData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+    uploadLetterMuatation.mutate(fmData);
+  };
 
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
@@ -267,6 +284,83 @@ export const Lists = () => {
       </Form.Item>
     </Form>
   );
+  const uploadLefferForm2 = (
+    <Form
+      form={form}
+      name="control-hooks"
+      onFinish={(e) => onSubmit2(e)}
+      className="m-10 mb-3 flex flex-col items-center justify-between  w-96"
+    >
+      <h1 className="text-2xl mb-5">Zip file yuklang</h1>
+      <p className="text-center text-ligth_text text-sm mb-5">
+        Ro’yxatni qo’shganingizdan keyin ro’yxatlar qatorida <br /> ko’rinishi
+        uchun belgilangan to’lovni amalga oshirishingiz <br /> kerak bo’ladi
+      </p>
+      <Form.Item className="w-full">
+        <Select
+          placeholder="Bo'lim tanlash"
+          onChange={(e) => setDistrictId(e)}
+          allowClear
+          size="large"
+          bordered={false}
+          className="border-2 border-[rgba(0,0,0,0.15)] rounded-xl focus:shadow-md"
+        >
+          {fetchDistricts.isLoading ? (
+            <LoadingOutlined spin />
+          ) : (
+            fetchDistricts?.data?.data?.map((item) => (
+              <Select.Option value={item.id}>{item.name}</Select.Option>
+            ))
+          )}
+        </Select>
+      </Form.Item>
+
+      <Form.Item
+        name="file"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Upload
+          maxCount={1}
+          accept={`${
+            modal2.type === MODAL_TYPES.ADD_PDF ? " application/pdf" : ".xlsx"
+          }`}
+        >
+          <div className="flex border-2 border-[rgba(0,0,0,0.15)] py-0.5 rounded-[13px] focus:shadow-md w-96">
+            <input
+              type="text"
+              disabled
+              className="p-2 outline-none w-full"
+              placeholder={
+                modal2.type === MODAL_TYPES.ADD_PDF
+                  ? " PDF file yuklang"
+                  : "XLSX file yuklang"
+              }
+            />
+            <span className="bg-secondary py-1 px-6 rounded-r-2xl">
+              <DowvloadSvg />
+            </span>
+          </div>
+        </Upload>
+      </Form.Item>
+
+      <Form.Item>
+        <Button
+          type="ghost"
+          htmlType="submit"
+          className="bg-secondary text-white hover:bg-opacity-90 px-24"
+          loading={uploadLetterMuatation.isLoading}
+          size="large"
+        >
+          Saqlash
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+
 
   const letterExcelResult = fetchLetterExcel.isLoading ? (
     <LoadingOutlined
@@ -286,6 +380,7 @@ export const Lists = () => {
         onClick={() => {
           setPage(1)
           setLetterName(item.id);
+          localStorage.setItem("LetterID", item.id)
           setActiveBtn(item.id);
         }}
       >
@@ -366,10 +461,11 @@ export const Lists = () => {
     <div className="pb-10">
       <Header
         title={"Ro'yxatlar"}
-        handleEvent1={() => setModal({ open: true, type: MODAL_TYPES.ADD_PDF })}
+        handleEvent1={() => setModal2({ open: true, type: MODAL_TYPES.ADD_PDF })}
         handleEvent2={() =>
           setModal({ open: true, type: MODAL_TYPES.ADD_XLSX })
         }
+        
       />
 
       <div className="flex flex-row gap-3 w-[1200px] mb-10 overflow-hidden hover:overflow-x-scroll scrollbar-thin scrollbar-thumb-orange-400 scrollbar-track-gray-100">
@@ -395,6 +491,18 @@ export const Lists = () => {
           {modal.type === MODAL_TYPES.VIEW_LETTER_INFO
             ? modalContentResult
             : uploadLefferForm}
+        </Modal>
+        <Modal
+          centered
+          open={modal2.open}
+          onOk={() => setModal2({ open: false })}
+          onCancel={() => setModal2({ open: false })}
+          className="relative"
+          footer={[]}
+        >
+          {modal2.type === MODAL_TYPES.VIEW_LETTER_INFO
+            ? modalContentResult
+            : uploadLefferForm2}
         </Modal>
         {/* TODO FOR SEARCH FILTER IMPLEMENT */}
         {/* <Table /> */}
