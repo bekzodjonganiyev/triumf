@@ -24,7 +24,7 @@ class ClientApiService {
   }
 
   async getRoles() {
-    axios.defaults.baseURL = "https://api.triumf-express.uz/api/v1/dashboard/";
+    axios.defaults.baseURL = "https://api.triumf-express.uz/api/v1/";
     axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
     return await axios.get("profile/");
   }
