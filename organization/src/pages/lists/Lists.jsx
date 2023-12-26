@@ -1,39 +1,17 @@
 import React, { createRef, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useOutletContext, useLocation } from "react-router-dom";
-import {
-  Modal,
-  Table as AntTable,
-  Button,
-  Form,
-  message,
-  Upload,
-  Select,
-  Pagination,
-} from "antd";
+import { Modal, Table as AntTable, Button, Form, message, Upload, Select, Pagination, } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import * as htmlToImage from "html-to-image";
 
 import { FunctionalHeader, Header } from "../../components";
-import {
-  CalendarSvg,
-  LoacationSvg,
-  TimeSvg,
-  UserSvg,
-  BuildingSvg,
-  OrdinarNumberSvg,
-  EyeSvg,
-  DowvloadSvg,
-  CuriersLatterSvg,
-  CuriersCarSvg,
-  Curiers,
-} from "../../assets/icons";
+import { CalendarSvg, LoacationSvg, TimeSvg, UserSvg, BuildingSvg, OrdinarNumberSvg, EyeSvg, DowvloadSvg, CuriersLatterSvg, CuriersCarSvg, Curiers } from "../../assets/icons";
 import placeholder from "../../assets/images/placeholder.webp";
 
 import apiClient from "../../helper/apiClient";
 import { time } from "../../helper/dateFormatter";
-import { useAppContext } from "../../context/app.context";
 
 const columns = [
   {
@@ -80,9 +58,6 @@ const createFileName = (extension = "", ...names) => {
 export const Lists = () => {
   const [user] = useOutletContext();
   const [form] = Form.useForm();
-  const { searchValue } = useAppContext();
-
-  const a = useLocation();
 
   const [letterExcel, setLetterExcel] = useState([]);
   const [lettersList, setLettersList] = useState([]);

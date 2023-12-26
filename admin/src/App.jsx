@@ -43,7 +43,7 @@ function App() {
           </Route>
 
           <Route path="couriers" element={<Couriers />} />
-          <Route path="couriers/:id/add_letter" element={<SelectedLetterTable />}/>
+          <Route path="couriers/:courierId/:districtId/add_letter" element={<SelectedLetterTable />}/>
           <Route path="couriers/profile/:id" element={<CouriersProfile />}> 
             <Route path="statistika" element={   <h1 className="text-red-400">Statistika malumotlari bor</h1> }  />
             <Route  path="xisob" element={<h1 className="text-red-400">Xisob-kitob malumotlari bor</h1> } />

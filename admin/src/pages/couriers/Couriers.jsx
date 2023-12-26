@@ -16,14 +16,11 @@ import { useAppContext } from "../../context/app.context";
 import { Link } from "react-router-dom";
 
 export const Couriers = () => {
-  const { setSelectedLetters, setNecceseryIds } = useAppContext();
-
   const { Option } = Select;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const [districtId, setDestrictId] = useState("");
-  const [courierId, setCourierId] = useState(0);
+  const [idsForLetterConnetToCourier, setIdsForLetterConnetToCourier] = useState({courierId: null, districtId:  null});
 
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["couriers"],
@@ -33,23 +30,6 @@ export const Couriers = () => {
   const getDistricts = useQuery({
     queryKey: ["districts"],
     queryFn: () => apiClient.getAll("letters/get_districts/"),
-  });
-
-  const getLetters = useQuery({
-    queryKey: ["letters", districtId],
-    queryFn: () => apiClient.getAll(`letters/?district_id=${districtId}`),
-    onSuccess: (res) => {
-      const arr = res.data.results.map((item, key) => ({
-        key: item.id,
-        order: key + 1,
-        address: item.address,
-        name: item.name,
-        sender: item.receiver_name,
-        icon: "✔",
-      }));
-      setSelectedLetters(arr);
-    },
-    refetchOnWindowFocus: false,
   });
 
   const couriers = data?.data.map((item) => ({
@@ -79,7 +59,7 @@ export const Couriers = () => {
           </h1>
           <Select
             placeholder="Bo'lim tanlash"
-            onChange={(e) => setDestrictId(e)}
+            onChange={(e) => setIdsForLetterConnetToCourier(prev => ({...prev, districtId: e}))}
             allowClear
             size="large"
             bordered={false}
@@ -98,13 +78,7 @@ export const Couriers = () => {
             )}
           </Select>
           <Link
-            onClick={() =>
-              setNecceseryIds({
-                courier_id: courierId,
-                district_id: districtId,
-              })
-            }
-            to={"/couriers/12/add_letter"}
+            to={`/couriers/${idsForLetterConnetToCourier.courierId}/${idsForLetterConnetToCourier.districtId}/add_letter`}
             className="bg-primary text-white text-center ml-[160px] py-2 px-4 rounded-md"
             size="large"
           >
@@ -138,7 +112,7 @@ export const Couriers = () => {
           obj={item}
           hasEvent1={true}
           handleBtn1={(e) => {
-            setCourierId(e);
+            setIdsForLetterConnetToCourier(prev => ({...prev, courierId: e}));
             setIsModalOpen2(true);
           }}
         />
