@@ -77,13 +77,17 @@ export const Couriers = () => {
               ))
             )}
           </Select>
-          <Link
-            to={`/couriers/${idsForLetterConnetToCourier.courierId}/${idsForLetterConnetToCourier.districtId}/add_letter`}
-            className="bg-primary text-white text-center ml-[160px] py-2 px-4 rounded-md"
-            size="large"
-          >
-            Davom etish
-          </Link>
+          {
+            idsForLetterConnetToCourier.districtId 
+              ? <Link
+                  to={`/couriers/${idsForLetterConnetToCourier.courierId}/${idsForLetterConnetToCourier.districtId}/add_letter`}
+                  className="bg-primary text-white text-center ml-[160px] py-2 px-4 rounded-md"
+                  size="large"
+                >
+                  Davom etish
+                </Link>
+              : null
+          }
         </div>
       </Modal>
       {isModalOpen ? (

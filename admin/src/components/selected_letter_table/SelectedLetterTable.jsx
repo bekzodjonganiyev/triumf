@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Input, message, Pagination, Select, Table } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { NewSvg, PendingSvg } from "../../assets/icons";
@@ -33,7 +33,7 @@ export const SelectedLetterTable = () => {
   const params = useParams();
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [selectedLetters, setSelectedLetters] = useState({filteredLetters: [], letters: []});
+  const [selectedLetters, setSelectedLetters] = useState({ filteredLetters: [], letters: [] });
   const [statusLetter, setStatusLetter] = useState("");
   const [page, setPage] = useState(1);
   const [filtered, setFiltered] = useState([]);
@@ -84,7 +84,7 @@ export const SelectedLetterTable = () => {
   const lettrersForCouriers = useQuery({
     queryKey: ["lettrersForCouriers", params.districtId, page, statusLetter],
     queryFn: () =>
-      apiClient.getAll(`letters/?district_id=${params.districtId}&page=${page}&status=${statusLetter ?? ""}`),
+      apiClient.getAll(`letters/?district_id=${params.districtId}&status=${statusLetter ?? ""}&page=${page}`),
     onSuccess: (res) => {
       const arr = res.data.results.map((item, key) => ({
         key: item.id,
@@ -94,9 +94,14 @@ export const SelectedLetterTable = () => {
         sender: item.organization,
         icon: item.status === "process" && <PendingSvg />
       }));
-      setSelectedLetters(prev => ({...prev, letters: arr, filteredLetters: arr}));
+      setSelectedLetters(prev => ({ ...prev, letters: arr, filteredLetters: arr }));
     },
     refetchOnWindowFocus: false,
+  });
+
+  const courierData = useQuery({
+    queryKey: ["couriers-by-id"],
+    queryFn: () => apiClient.getAll(`couriers/${params.courierId}`),
   });
 
   const selectedLettersMutation = useMutation({
@@ -116,21 +121,23 @@ export const SelectedLetterTable = () => {
       temp.push(item)
       if (value && value.length > 0) {
         return item.address
-        .toLowerCase()
-        .includes(value.trim().toLowerCase());
+          .toLowerCase()
+          .includes(value.trim().toLowerCase());
       } else return item
     })
 
-    setSelectedLetters(prev => ({...prev, filteredLetters: a}))
+    setSelectedLetters(prev => ({ ...prev, filteredLetters: a }))
   }
 
   return (
     <div className="flex flex-col justify-between py-10">
-
+      {
+        courierData.isFetched ? <h1 className="text-md mb-5"><Link className="underline" to={`/couriers/profile/${params.courierId}`}>{courierData.data.data.full_name}</Link> ismli kuryerga xatlarni topshiryapsiz</h1> : "Loading"
+      }
       {/* Filter, Search and Pagination */}
       <div className="flex justify-between mb-10">
         <div className="w-1/3">
-          <Input 
+          <Input
             placeholder="Hudud bo'yicha qidiring"
             onChange={(e) => handleSearch(e.target.value)}
           />
@@ -138,7 +145,7 @@ export const SelectedLetterTable = () => {
         <div className="min-w-1/3">
           <Select
             placeholder="Xat statusini tanlang"
-            onChange={(e) => setStatusLetter(e)}
+            onChange={(e) => {setStatusLetter(e); setPage(1)}}
             allowClear
             size="large"
             bordered={false}
@@ -151,14 +158,14 @@ export const SelectedLetterTable = () => {
         {
           lettrersForCouriers.isLoading || lettrersForCouriers.isRefetching
             ? <div className="min-w-1/3">
-                <LoadingOutlined
-                  className="float-left"
-                  style={{
-                    fontSize: 30,
-                    color: "#FF932F",
-                  }}
-                  spin
-                />
+              <LoadingOutlined
+                className="float-left"
+                style={{
+                  fontSize: 30,
+                  color: "#FF932F",
+                }}
+                spin
+              />
             </div>
             : <Pagination
               defaultCurrent={1}
